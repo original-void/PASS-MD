@@ -3,31 +3,421 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Notes</title>
+<title>Surveying - Notes</title>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['$$', '$$']] },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+};
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
 <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: #4a4a4a; font-family: Arial, sans-serif; }
- .header { background: #e91e63; color: white; padding: 20px 15px; text-align: center; font-size: 18px; font-weight: bold; }
- .back { background: #d81b60; padding: 12px 15px; color: white; cursor: pointer; font-size: 14px; }
- .back:hover { background: #c2185b; }
- .content { background: white; margin: 15px; padding: 20px; border-radius: 5px; text-align: center; color: #666; }
+  :root { 
+    --bg: #ffffff; --text: #1a202c; --section-bg: #f7fafc; --border: #cbd5e0;
+    --accent: #ed8936; --header-bg: #ebf8ff; --topic-bg: #38a169; --h-color: #1a365d;
+  }
+  body.dark-theme {
+    --bg: #1a202c; --text: #e2e8f0; --section-bg: #2d3748; --border: #4a5568;
+    --accent: #f6ad55; --header-bg: #2d3748; --topic-bg: #2f855a; --h-color: #90cdf4;
+  }
+  
+  body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 20px; background: var(--bg); color: var(--text); display: block; }
+  h1, h2, h3 { color: var(--h-color); border-bottom: 2px solid #2b6cb0; padding-bottom: 5px; }
+  h2 { margin-top: 40px; background: var(--header-bg); padding: 10px; }
+  .section { margin-bottom: 30px; padding: 15px; border: 1px solid var(--border); border-radius: 8px; background: var(--section-bg); }
+  .theory { background: var(--section-bg); padding: 12px; border-left: 4px solid #4299e1; margin: 15px 0; }
+  .example { background: #fffaf0; padding: 15px; border: 1px dashed var(--accent); margin: 15px 0; }
+  .solution { background: #f0fff4; padding: 12px; border-left: 4px solid #48bb78; }
+  .complete-btn { background: #2b6cb0; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; margin-top: 10px; }
+  .complete-btn:hover { background: #2c5282; }
+  .complete-btn.completed { background: #48bb78; }
+  .formula { background: #f0fff4; padding: 10px; margin: 10px 0; text-align: center; border-radius: 4px; }
+  .why { background: #fff5f5; padding: 10px; margin: 10px 0; border-left: 3px solid #f56565; font-size: 0.95em; }
+  .given { background: var(--header-bg); padding: 10px; margin: 10px 0; border-radius: 4px; }
+  #progress-bar { position: fixed; top: 0; left: 0; right: 0; background: #2d3748; color: white; padding: 8px; z-index: 1000; }
+  #progress-fill { background: #48bb78; height: 4px; width: 0%; transition: width 0.3s; }
+  .controls { margin-top: 50px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .controls button { background: #4a5568; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
+  .controls button:hover { background: #2d3748; }
+  .topic-header { background: var(--topic-bg); color: white; padding: 15px; margin: 40px -20px 20px -20px; }
+  .toc ul { list-style: none; padding-left: 0; }
+  .toc li { margin: 8px 0; }
+  .page-tag { font-size: 0.8em; color: #718096; font-weight: normal; }
+  .svg-container { text-align: center; margin: 15px 0; }
+  .svg-label { font-size: 12px; font-family: Arial; fill: var(--text); }
+  a { color: #3182ce; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+  th, td { border: 1px solid var(--border); padding: 8px; text-align: left; }
+  th { background: var(--header-bg); }
 </style>
 </head>
 <body>
-  <div class="header" id="title">Notes</div>
-  <div class="back" onclick="history.back()">‹ Back to Subjects</div>
-  <div class="content" id="notes-content">No notes yet</div>
+<div id="progress-bar">
+  <div id="progress-fill"></div>
+  <span id="progress-text">0/15 sections completed</span>
+</div>
 
-<script src="script.js"></script>
+<div class="controls">
+  <a href="index.html">‹ Back to Subjects</a>
+  <button onclick="toggleTheme()">🌓 Theme</button>
+  <button onclick="window.print()">📄 PDF</button>
+</div>
+
+<div class="container">
+<header>
+  <h1>Surveying</h1>
+  <p><strong>Chain Survey • Compass Survey • Leveling • Theodolite</strong></p>
+  <p>Notes + Examples + SVG Diagrams | Progress Tracker</p>
+</header>
+
+<div class="toc">
+  <h3>Table of Contents</h3>
+  
+  <h4>Topic 1: Chain Survey <span class="page-tag">Pages 1-8</span></h4>
+  <ul>
+    <li><a href="#sur1">1. Principles of Surveying</a></li>
+    <li><a href="#sur2">2. Equipment Used in Chain Survey</a></li>
+    <li><a href="#sur3">3. Ranging & Chaining Methods</a></li>
+    <li><a href="#sur4">4. Obstacles in Chaining</a></li>
+    <li><a href="#sur5">5. Errors in Chain Survey</a></li>
+  </ul>
+  
+  <h4>Topic 2: Compass Survey <span class="page-tag">Pages 9-15</span></h4>
+  <ul>
+    <li><a href="#sur6">6. Bearings - WCB & QB</a></li>
+    <li><a href="#sur7">7. Conversion of Bearings</a></li>
+    <li><a href="#sur8">8. Local Attraction</a></li>
+    <li><a href="#sur9">9. Included Angles from Bearings</a></li>
+  </ul>
+  
+  <h4>Topic 3: Leveling <span class="page-tag">Pages 16-25</span></h4>
+  <ul>
+    <li><a href="#sur10">10. Terms in Leveling</a></li>
+    <li><a href="#sur11">11. Height of Instrument Method</a></li>
+    <li><a href="#sur12">12. Rise & Fall Method</a></li>
+    <li><a href="#sur13">13. Arithmetic Checks</a></li>
+    <li><a href="#sur14">14. Contouring</a></li>
+    <li><a href="#sur15">15. Characteristics of Contours</a></li>
+  </ul>
+</div>
+
+<div class="topic-header">
+  <h2>Topic 1: Chain Survey</h2>
+  <p>Basic linear measurements using chain/tape</p>
+</div>
+
+<div class="section" id="sur1">
+<h2>1. Principles of Surveying <span class="page-tag">Page 1</span></h2>
+<div class="theory">
+<p><strong>2 Fundamental Principles:</strong></p>
+<ol>
+<li><strong>Work from whole to part:</strong> Establish main control points first with high accuracy, then survey detail points from them.</li>
+<li><strong>Locate new point by at least 2 measurements:</strong> A point should be fixed by minimum 2 independent measurements from fixed reference points.</li>
+</ol>
+<div class="why"><strong>Why:</strong> Working part-to-whole makes small errors accumulate and ruin the whole survey. Whole-to-part contains errors within small areas only.</div>
+</div>
+<button id="complete-sur1" class="complete-btn" onclick="markSectionComplete('sur1')">Mark as Complete</button>
+</div>
+
+<div class="section" id="sur2">
+<h2>2. Equipment Used in Chain Survey <span class="page-tag">Pages 2-3</span></h2>
+<div class="theory">
+<table>
+<tr><th>Equipment</th><th>Use</th><th>Length</th></tr>
+<tr><td>Metric Chain</td><td>Main distance measurement</td><td>20m or 30m</td></tr>
+<tr><td>Tape</td><td>Offsets, cross measurements</td><td>10m, 20m, 30m</td></tr>
+<tr><td>Ranging Rods</td><td>Marking stations, ranging</td><td>2m or 3m long</td></tr>
+<tr><td>Arrows</td><td>Marking chain lengths</td><td>10 arrows per chain</td></tr>
+<tr><td>Cross Staff</td><td>Setting right angles</td><td>For offsets</td></tr>
+<tr><td>Plumb Bob</td><td>Vertical alignment</td><td>For chaining on slopes</td></tr>
+</table>
+<div class="why"><strong>Why Chain + Tape:</strong> Chain for main lines because it’s durable. Tape for offsets because it’s flexible and accurate for short distances.</div>
+</div>
+<div class="svg-container">
+<svg width="400" height="120" viewBox="0 0 400 120">
+  <rect x="50" y="50" width="200" height="20" fill="none" stroke="#2b6cb0" stroke-width="2" stroke-dasharray="10,5"/>
+  <text x="150" y="40" text-anchor="middle" class="svg-label">20m Metric Chain</text>
+  <polygon points="250,45 270,55 250,65" fill="#dc2626"/>
+  <text x="280" y="60" class="svg-label">Arrow</text>
+  <line x1="50" y1="80" x2="50" y2="110" stroke="#8b4513" stroke-width="3"/>
+  <text x="50" y="120" text-anchor="middle" class="svg-label">Ranging Rod</text>
+</svg>
+<p class="caption">Basic chain survey equipment</p>
+</div>
+<button id="complete-sur2" class="complete-btn" onclick="markSectionComplete('sur2')">Mark as Complete</button>
+</div>
+
+<div class="section" id="sur3">
+<h2>3. Ranging & Chaining Methods <span class="page-tag">Pages 4-5</span></h2>
+<div class="theory">
+<p><strong>Ranging:</strong> Establishing intermediate points in a straight line between 2 end stations so chain lies straight.</p>
+<p><strong>Direct Ranging:</strong> When end stations are intervisible. Done by eye or ranging rod.</p>
+<p><strong>Indirect Ranging:</strong> When end stations not intervisible due to obstruction. Uses reciprocal ranging.</p>
+<p><strong>Chaining:</strong> Measuring distance by laying chain along the line.</p>
+</div>
+<div class="example">
+<h4>Procedure for Chaining:</h4>
+<ol>
+<li>Leader goes ahead with 10 arrows, follower holds zero end</li>
+<li>Leader drags chain, aligns with ranging rod at far station</li>
+<li>Follower checks zero end is at station peg</li>
+<li>Leader fixes arrow at rear end of chain</li>
+<li>Both lift chain, swing it, and lay it again</li>
+<li>Count arrows = number of full chain lengths</li>
+</ol>
+<div class="formula">$$\text{Total Distance} = (n \times \text{Chain Length}) + \text{Tail Length}$$</div>
+</div>
+<button id="complete-sur3" class="complete-btn" onclick="markSectionComplete('sur3')">Mark as Complete</button>
+</div>
+
+<div class="section" id="sur4">
+<h2>4. Obstacles in Chaining <span class="page-tag">Page 6</span></h2>
+<div class="theory">
+<p><strong>Type 1: Obstruction to ranging only</strong> - River, bush. Solution: Erect perpendiculars, use right angle triangles.</p>
+<p><strong>Type 2: Obstruction to chaining + ranging</strong> - Building, pond. Solution: Use triangle method or rectangle method.</p>
+</div>
+<div class="svg-container">
+<svg width="400" height="150" viewBox="0 0 400 150">
+  <line x1="50" y1="75" x2="150" y2="75" stroke="#2b6cb0" stroke-width="3"/>
+  <rect x="150" y="50" width="50" height="50" fill="#a0aec0" stroke="#2d3748"/>
+  <line x1="200" y1="75" x2="350" y2="75" stroke="#2b6cb0" stroke-width="3"/>
+  <line x1="150" y1="75" x2="150" y2="25" stroke="#16a34a" stroke-width="2"/>
+  <line x1="200" y1="75" x2="200" y2="25" stroke="#16a34a" stroke-width="2"/>
+  <line x1="150" y1="25" x2="200" y2="25" stroke="#16a34a" stroke-width="2" stroke-dasharray="4,4"/>
+  <text x="175" y="15" text-anchor="middle" class="svg-label">Equal distance</text>
+  <text x="100" y="90" class="svg-label">A</text>
+  <text x="300" y="90" class="svg-label">B</text>
+  <text x="175" y="105" text-anchor="middle" class="svg-label" font-size="10">Building obstacle</text>
+</svg>
+<p class="caption">Overcoming obstacle by constructing rectangle</p>
+</div>
+<button id="complete-sur4" class="complete-btn" onclick="markSectionComplete('sur4')">Mark as Complete</button>
+</div>
+
+<div class="section" id="sur5">
+<h2>5. Errors in Chain Survey <span class="page-tag">Pages 7-8</span></h2>
+<div class="theory">
+<p><strong>Compensating Errors:</strong> Random errors. Sometimes +ve, sometimes -ve. Cancel out partly. Proportional to √L</p>
+<p><strong>Cumulative Errors:</strong> Systematic errors. Always +ve or always -ve. Add up. Proportional to L</p>
+</div>
+<table>
+<tr><th>Cumulative +ve</th><th>Cumulative -ve</th></tr>
+<tr><td>Chain too short</td><td>Chain too long</td></tr>
+<tr><td>Temperature > standard</td><td>Temperature < standard</td></tr>
+<tr><td>Sagging of chain</td><td>Pull more than standard</td></tr>
+</table>
+<div class="formula">$$\text{True Length} = \text{Measured Length} \times \frac{\text{Actual Chain Length}}{\text{Nominal Chain Length}}$$</div>
+<button id="complete-sur5" class="complete-btn" onclick="markSectionComplete('sur5')">Mark as Complete</button>
+</div>
+
+<div class="topic-header">
+  <h2>Topic 2: Compass Survey</h2>
+  <p>Measuring angles using prismatic compass</p>
+</div>
+
+<div class="section" id="sur6">
+<h2>6. Bearings - WCB & QB <span class="page-tag">Page 9</span></h2>
+<div class="theory">
+<p><strong>Whole Circle Bearing WCB:</strong> Angle measured clockwise from North 0° to 360°. Always 0°-360°.</p>
+<p><strong>Quadrantal Bearing QB:</strong> Angle measured from North or South towards East or West. 0°-90° + quadrant name.</p>
+</div>
+<div class="svg-container">
+<svg width="300" height="300" viewBox="0 0 300 300">
+  <circle cx="150" cy="150" r="100" fill="none" stroke="#2b6cb0" stroke-width="2"/>
+  <line x1="150" y1="50" x2="150" y2="250" stroke="#4a5568" stroke-width="1"/>
+  <line x1="50" y1="150" x2="250" y2="150" stroke="#4a5568" stroke-width="1"/>
+  <text x="150" y="30" text-anchor="middle" class="svg-label" font-weight="bold">N</text>
+  <text x="270" y="155" class="svg-label" font-weight="bold">E</text>
+  <text x="150" y="280" text-anchor="middle" class="svg-label" font-weight="bold">S</text>
+  <text x="30" y="155" class="svg-label" font-weight="bold">W</text>
+  <line x1="150" y1="150" x2="220" y2="80" stroke="#dc2626" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="200" y="100" class="svg-label">WCB = 60°</text>
+  <text x="200" y="120" class="svg-label">QB = N60°E</text>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><polygon points="0 0, 10 3, 0 6" fill="#dc2626"/></marker></defs>
+</svg>
+<p class="caption">WCB vs QB representation</p>
+</div>
+<button id="complete-sur6" class="complete-btn" onclick="markSectionComplete('sur6')">Mark as Complete</button>
+</div>
+
+<div class="section" id="sur7">
+<h2>7. Conversion of Bearings <span class="page-tag">Page 10</span></h2>
+<div class="theory">
+<table>
+<tr><th>Quadrant</th><th>WCB to QB</th><th>Example</th></tr>
+<tr><td>N-E</td><td>QB = WCB</td><td>WCB 40° = N40°E</td></tr>
+<tr><td>S-E</td><td>QB = 180° - WCB</td><td>WCB 140° = S40°E</td></tr>
+<tr><td>S-W</td><td>QB = WCB - 180°</td><td>WCB 220° = S40°W</td></tr>
+<tr><td>N-W</td><td>QB = 360° - WCB</td><td>WCB 320° = N40°W</td></tr>
+</table>
+</div>
+<button id="complete-sur7" class="complete-btn" onclick="markSectionComplete('sur7')">Mark as Complete</button>
+</div>
+
+<div class="section" id="sur8">
+<h2>8. Local Attraction <span class="page-tag">Pages 11-12</span></h2>
+<div class="theory">
+<p><strong>Local Attraction:</strong> When compass needle is attracted by magnetic objects like iron pipes, power lines near station.</p>
+<p><strong>Detection:</strong> FB and BB of same line should differ by 180°. If not, local attraction present.</p>
+<p><strong>Correction:</strong> Apply correction to affected stations. If only 1 station affected, use unaffected bearing to correct others.</p>
+</div>
+<div class="formula">$$\text{Correction} = \text{True Bearing} - \text{Observed Bearing}$$</div>
+<button id="complete-sur8" class="complete-btn" onclick="markSectionComplete('sur8')">Mark as Complete</button>
+</div>
+
+<div class="section" id="sur9">
+<h2>9. Included Angles from Bearings <span class="page-tag">Page 13</span></h2>
+<div class="theory">
+<p><strong>For clockwise traverse:</strong></p>
+<div class="formula">$$\text{Included Angle} = \text{BB of previous line} - \text{FB of next line}$$</div>
+<p>If result -ve, add 360°. If >180°, subtract from 360° for interior angle.</p>
+</div>
+<button id="complete-sur9" class="complete-btn" onclick="markSectionComplete('sur9')">Mark as Complete</button>
+</div>
+
+<div class="topic-header">
+  <h2>Topic 3: Leveling</h2>
+  <p>Finding heights and differences in elevation</p>
+</div>
+
+<div class="section" id="sur10">
+<h2>10. Terms in Leveling <span class="page-tag">Page 16</span></h2>
+<div class="theory">
+<table>
+<tr><td><strong>BS - Back Sight:</strong></td><td>First reading on point of known elevation. +ve</td></tr>
+<tr><td><strong>IS - Intermediate Sight:</strong></td><td>Readings between BS and FS</td></tr>
+<tr><td><strong>FS - Fore Sight:</strong></td><td>Last reading before shifting instrument. -ve</td></tr>
+<tr><td><strong>HI - Height of Instrument:</strong></td><td>RL of line of sight = RL of BM + BS</td></tr>
+<tr><td><strong>RL - Reduced Level:</strong></td><td>Elevation of point above datum</td></tr>
+</table>
+<div class="why"><strong>Why:</strong> HI stays constant for all readings from one instrument position. Change point = new HI.</div>
+</div>
+<button id="complete-sur10" class="complete-btn" onclick="markSectionComplete('sur10')">Mark as Complete</button>
+</div>
+
+<div class="section" id="sur11">
+<h2>11. Height of Instrument Method <span class="page-tag">Pages 17-18</span></h2>
+<div class="theory">
+<div class="formula">$$\text{HI} = \text{RL of BM} + \text{BS}$$</div>
+<div class="formula">$$\text{RL of any point} = \text{HI} - \text{Staff Reading}$$</div>
+<div class="why"><strong>Why:</strong> Find instrument height once, then subtract all readings from it. Faster for many points.</div>
+</div>
+<div class="example">
+<h4>Example:</h4>
+<p>BM RL = 100.000m, BS = 1.250m, IS = 0.980m, FS = 2.150m. Find RLs.</p>
+<div class="solution">
+<p>HI = 100.000 + 1.250 = 101.250m</p>
+<p>RL of IS = 101.250 - 0.980 = 100.270m</p>
+<p>RL of FS = 101.250 - 2.150 = 99.100m</p>
+</div>
+</div>
+<button id="complete-sur11" class="complete-btn" onclick="markSectionComplete('sur11')">Mark as Complete</button>
+</div>
+
+<div class="section" id="sur12">
+<h2>12. Rise & Fall Method <span class="page-tag">Pages 19-20</span></h2>
+<div class="theory">
+<div class="formula">$$\text{Rise} = \text{Previous Reading} - \text{Current Reading}$$</div>
+<div class="formula">$$\text{Fall} = \text{Current Reading} - \text{Previous Reading}$$</div>
+<div class="formula">$$\text{RL of point} = \text{RL of previous point} ± \text{Rise/Fall}$$</div>
+<div class="why"><strong>Why:</strong> Each RL calculated step by step. Better for checking errors as you go.</div>
+</div>
+<button id="complete-sur12" class="complete-btn" onclick="markSectionComplete('sur12')">Mark as Complete</button>
+</div>
+
+<div class="section" id="sur13">
+<h2>13. Arithmetic Checks <span class="page-tag">Page 21</span></h2>
+<div class="theory">
+<p><strong>For HI Method:</strong></p>
+<div class="formula">$$\sum \text{BS} - \sum \text{FS} = \text{Last RL} - \text{First RL}$$</div>
+<p><strong>For Rise & Fall Method:</strong></p>
+<div class="formula">$$\sum \text{BS} - \sum \text{FS} = \sum \text{Rise} - \sum \text{Fall} = \text{Last RL} - \text{First RL}$$</div>
+<div class="why"><strong>Why:</strong> Checks if addition of staff readings and RL calculations are correct. Must balance.</div>
+</div>
+<button id="complete-sur13" class="complete-btn" onclick="markSectionComplete('sur13')">Mark as Complete</button>
+</div>
+
+<div class="section" id="sur14">
+<h2>14. Contouring <span class="page-tag">Pages 22-24</span></h2>
+<div class="theory">
+<p><strong>Contour:</strong> Line joining points of equal elevation above datum.</p>
+<p><strong>Contour Interval CI:</strong> Vertical distance between 2 consecutive contours.</p>
+<p><strong>Horizontal Equivalent HE:</strong> Horizontal distance between 2 contours on map.</p>
+<div class="formula">$$\text{Gradient} = \frac{\text{CI}}{\text{HE}}$$</div>
+<div class="why"><strong>Why:</strong> Steep slope = contours close together. Flat ground = contours far apart.</div>
+</div>
+<button id="complete-sur14" class="complete-btn" onclick="markSectionComplete('sur14')">Mark as Complete</button>
+</div>
+
+<div class="section" id="sur15">
+<h2>15. Characteristics of Contours <span class="page-tag">Page 25</span></h2>
+<div class="theory">
+<ol>
+<li>Contour lines never cross each other except in case of overhanging cliff.</li>
+<li>Contour lines close together = steep slope. Far apart = gentle slope.</li>
+<li>Uniform spacing = uniform slope.</li>
+<li>Contour lines form V-shape pointing upstream when crossing valley.</li>
+<li>Contour lines form U-shape pointing downstream when crossing ridge.</li>
+</ol>
+</div>
+<div class="svg-container">
+<svg width="300" height="200" viewBox="0 0 300 200">
+  <path d="M 50 150 Q 100 120 150 130 Q 200 140 250 110" fill="none" stroke="#8b4513" stroke-width="2"/>
+  <path d="M 50 130 Q 100 100 150 110 Q 200 120 250 90" fill="none" stroke="#8b4513" stroke-width="2"/>
+  <path d="M 50 110 Q 100 80 150 90 Q 200 100 250 70" fill="none" stroke="#8b4513" stroke-width="2"/>
+  <text x="260" y="115" class="svg-label">150m</text>
+  <text x="260" y="95" class="svg-label">160m</text>
+  <text x="260" y="75" class="svg-label">170m</text>
+  <text x="150" y="180" text-anchor="middle" class="svg-label">Valley - V points upstream</text>
+</svg>
+<p class="caption">Contour characteristics</p>
+</div>
+<button id="complete-sur15" class="complete-btn" onclick="markSectionComplete('sur15')">Mark as Complete</button>
+</div>
+
+</div>
+
 <script>
-const params = new URLSearchParams(window.location.search);
-const key = params.get('subject');
-const subj = subjects[key];
+const totalSections = 15;
+let completed = JSON.parse(localStorage.getItem('completedSurvey') || '[]');
 
-if(subj) {
-  document.getElementById('title').innerText = subj.title;
-  document.getElementById('notes-content').innerHTML = subj.notes || 'No notes yet';
+function updateProgress() {
+  const percent = (completed.length / totalSections) * 100;
+  document.getElementById('progress-fill').style.width = percent + '%';
+  document.getElementById('progress-text').textContent = `${completed.length}/${totalSections} sections completed`;
+  completed.forEach(id => {
+    const btn = document.getElementById(`complete-${id}`);
+    if (btn) btn.classList.add('completed');
+  });
 }
+
+function markSectionComplete(id) {
+  if (!completed.includes(id)) {
+    completed.push(id);
+    localStorage.setItem('completedSurvey', JSON.stringify(completed));
+    updateProgress();
+  }
+}
+
+function toggleTheme() {
+  document.body.classList.toggle('dark-theme');
+  localStorage.setItem('surveyTheme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  if (localStorage.getItem('surveyTheme') === 'dark') {
+    document.body.classList.add('dark-theme');
+  }
+  updateProgress();
+});
+
+window.addEventListener('load', function() {
+  if (window.MathJax) MathJax.typesetPromise();
+});
 </script>
 </body>
-</html>
+   </html>
