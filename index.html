@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Building Tech Past Papers</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #4a4a4a; font-family: Arial, sans-serif; min-height: 100vh; }
+ .header {
+    background: #e91e63;
+    color: white;
+    padding: 20px 15px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    font-style: italic;
+  }
+ .ad {
+    background: #d81b60;
+    color: rgba(255,255,255,0.7);
+    text-align: right;
+    padding: 5px 15px;
+    font-size: 12px;
+    font-style: italic;
+  }
+ .container { padding: 20px 15px; }
+ .subject-bar {
+    background: white;
+    border-radius: 5px;
+    padding: 18px 15px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.2s;
+  }
+ .subject-bar:hover { background: #f5f5f5; transform: scale(1.02); }
+ .arrow { font-size: 18px; color: #e91e63; }
+</style>
+</head>
+<body>
+  <div class="header">Building Tech MOD Past Papers</div>
+  <div class="ad">advertisement</div>
+  <div class="container">
+    <div class="subject-bar" onclick="window.location.href='structures.html'">
+      <span>Structures 1</span><span class="arrow">›</span>
+    </div>
+    <div class="subject-bar" onclick="window.location.href='notes.html?subject=survey1'">
+      <span>Survey 1</span><span class="arrow">›</span>
+    </div>
+  </div>
+</body>
+</html>
