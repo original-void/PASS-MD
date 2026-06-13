@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notes</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #4a4a4a; font-family: Arial, sans-serif; }
+ .header { background: #e91e63; color: white; padding: 20px 15px; text-align: center; font-size: 18px; font-weight: bold; }
+ .back { background: #d81b60; padding: 12px 15px; color: white; cursor: pointer; font-size: 14px; }
+ .back:hover { background: #c2185b; }
+ .content { background: white; margin: 15px; padding: 20px; border-radius: 5px; text-align: center; color: #666; }
+</style>
+</head>
+<body>
+  <div class="header" id="title">Notes</div>
+  <div class="back" onclick="history.back()">‹ Back to Subjects</div>
+  <div class="content" id="notes-content">No notes yet</div>
+
+<script src="script.js"></script>
+<script>
+const params = new URLSearchParams(window.location.search);
+const key = params.get('subject');
+const subj = subjects[key];
+
+if(subj) {
+  document.getElementById('title').innerText = subj.title;
+  document.getElementById('notes-content').innerHTML = subj.notes || 'No notes yet';
+}
+</script>
+</body>
+</html>
