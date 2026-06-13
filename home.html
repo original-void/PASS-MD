@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="auth.js"></script>
+  <div style="position:absolute; top:15px; right:20px; display:flex; align-items:center; gap:12px; color:white;">
+  <span id="user-display">Loading...</span>
+  <button onclick="logout()" style="background:rgba(255,255,255,0.2); border:none; padding:8px 16px; border-radius:6px; color:white; cursor:pointer;">Logout</button>
+  </div>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CIVIL ENGINEERING AND BUILDING TECH </title>
