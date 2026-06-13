@@ -3,56 +3,241 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Building Tech Past Papers</title>
+<title>CIVIL ENGINEERING AND BUILDING TECH </title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
+  :root {
+    --primary: #ff3366;
+    --primary-dark: #e91e63;
+    --bg: #0f172a;
+    --card-bg: #1e293b;
+    --text: #f1f5f9;
+    --text-dim: #94a3b8;
+    --accent: #38bdf8;
+  }
+  
     * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: #4a4a4a; font-family: Arial, sans-serif; min-height: 100vh; }
- .header {
-    background: #e91e63;
-    color: white;
-    padding: 20px 15px;
+  
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: var(--text);
+    min-height: 100vh;
+    padding-bottom: 80px;
+  }
+  
+  .header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    padding: 40px 20px 30px;
     text-align: center;
-    font-size: 18px;
-    font-weight: bold;
-    font-style: italic;
+    box-shadow: 0 10px 30px rgba(255, 51, 102, 0.3);
+    position: relative;
+    overflow: hidden;
   }
- .ad {
-    background: #d81b60;
-    color: rgba(255,255,255,0.7);
+  
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: shimmer 3s infinite;
+  }
+  
+  @keyframes shimmer {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(180deg); }
+  }
+  
+  .header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  }
+  
+  .header p {
+    font-size: 0.85rem;
+    opacity: 0.9;
+    margin-top: 8px;
+    position: relative;
+    z-index: 1;
+    font-weight: 400;
+  }
+  
+  .ad-space {
+    background: rgba(255, 51, 102, 0.15);
     text-align: right;
-    padding: 5px 15px;
-    font-size: 12px;
+    padding: 6px 20px;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.6);
     font-style: italic;
   }
- .container { padding: 20px 15px; }
- .subject-bar {
-    background: white;
-    border-radius: 5px;
-    padding: 18px 15px;
-    margin-bottom: 12px;
-    font-size: 14px;
-    font-weight: bold;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    cursor: pointer;
+  
+  .container {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 0 20px;
+  }
+  
+  .subject-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: 0.2s;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(255,255,255,0.05);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    text-decoration: none;
+    color: var(--text);
   }
- .subject-bar:hover { background: #f5f5f5; transform: scale(1.02); }
- .arrow { font-size: 18px; color: #e91e63; }
+  
+  .subject-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(255, 51, 102, 0.25);
+    border-color: rgba(255, 51, 102, 0.3);
+  }
+  
+  .subject-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  .icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    box-shadow: 0 4px 12px rgba(255, 51, 102, 0.3);
+  }
+  
+  .subject-text h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  
+  .subject-text p {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+  }
+  
+  .arrow {
+    font-size: 1.5rem;
+    color: var(--primary);
+    transition: transform 0.3s;
+  }
+  
+  .subject-card:hover .arrow {
+    transform: translateX(5px);
+  }
+  
+  .stats {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .stat-box {
+    background: rgba(255,255,255,0.05);
+    padding: 12px 20px;
+    border-radius: 12px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  
+  .stat-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-top: 4px;
+  }
+  
+  .footer {
+    text-align: center;
+    margin-top: 50px;
+    padding: 20px;
+    color: var(--text-dim);
+    font-size: 0.8rem;
+  }
 </style>
 </head>
 <body>
-  <div class="header">Building Tech MOD Past Papers</div>
-  <div class="ad">advertisement</div>
-  <div class="container">
-    <div class="subject-bar" onclick="window.location.href='structures.html'">
-      <span>Structures 1</span><span class="arrow">›</span>
+
+<div class="header">
+  <h1>Building Tech MOD Past Papers</h1>
+  <p>KNEC Revision Made Simple</p>
+</div>
+
+<div class="ad-space">advertisement</div>
+
+<div class="container">
+  
+  <a href="notes.html?subject=str" class="subject-card">
+    <div class="subject-info">
+      <div class="icon">🏗️</div>
+      <div class="subject-text">
+        <h3>Structures 1</h3>
+        <p>25 Topics • Beams, Trusses, Deflection</p>
+      </div>
     </div>
-    <div class="subject-bar" onclick="window.location.href='notes.html?subject=survey1'">
-      <span>Survey 1</span><span class="arrow">›</span>
+    <div class="arrow">›</div>
+  </a>
+  
+  <a href="notes.html?subject=sur" class="subject-card">
+    <div class="subject-info">
+      <div class="icon">📐</div>
+      <div class="subject-text">
+        <h3>Survey 1</h3>
+        <p>20 Topics • Levelling, Chain Survey, Contours</p>
+      </div>
+    </div>
+    <div class="arrow">›</div>
+  </a>
+  
+  <div class="stats">
+    <div class="stat-box">
+      <div class="stat-number">45</div>
+      <div class="stat-label">Total Topics</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number">100%</div>
+      <div class="stat-label">Free Access</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number">Offline</div>
+      <div class="stat-label">Ready</div>
     </div>
   </div>
+  
+</div>
+
+<div class="footer">
+  Made for Civil Eng and Building Tech students • 
+</div>
+
 </body>
 </html>
