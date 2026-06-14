@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="auth.js"></script>
-  <div style="position:absolute; top:15px; right:20px; display:flex; align-items:center; gap:12px; color:white;">
-  <span id="user-display">Loading...</span>
-  <button onclick="logout()" style="background:rgba(255,255,255,0.2); border:none; padding:8px 16px; border-radius:6px; color:white; cursor:pointer;">Logout</button>
-  </div>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Surveying - SURVEY I Complete Notes</title>
@@ -20,7 +13,6 @@ window.MathJax = {
 };
 </script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
 <style>
   :root { 
     --bg: #ffffff; --text: #1a202c; --section-bg: #f7fafc; --border: #cbd5e0;
@@ -73,6 +65,13 @@ window.MathJax = {
 
 <div class="container">
 <header>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="auth.js"></script>
+  <div style="position:absolute; top:15px; right:20px; display:flex; align-items:center; gap:12px; color:white;">
+  <span id="user-display">Loading...</span>
+  <button onclick="logout()" style="background:rgba(255,255,255,0.2); border:none; padding:8px 16px; border-radius:6px; color:white; cursor:pointer;">Logout</button>
+  </div>
   <h1>SURVEY I</h1>
   <p><strong>Complete Notes - Introduction, Classification, Methods, Principles, Process, Measurements, Errors, Surveyors, Chain Surveying, Corrections, Levelling & Contouring</strong></p>
 </header>
@@ -105,7 +104,7 @@ window.MathJax = {
 
 <!-- SUR1: Define Survey + Objectives -->
 <div class="section" id="sur1">
-<h2>1. Define Survey & Objectives</h2>
+<h2> Define Survey & Objectives</h2>
 <h3>Define Survey:</h3>
 <p>Surveying is the art of determining relative positions of the points on earth's surface.</p>
 <p>It is done through observation & taking measurements & determining the boundaries, sizes, positions, quantity, value etc of lands, estates, buildings, farms etc.</p>
@@ -121,18 +120,20 @@ window.MathJax = {
 
 <!-- SUR2: Classification -->
 <div class="section" id="sur2">
-<h2>2. Classification of Survey</h2>
+<h2> Classification of Survey</h2>
 <p>Surveys can be classified based on several factors.</p>
 <p>The most common classification is based on purpose & field application:</p>
-<p>- By instrument used</p>
-<p>- By method employed</p>
+<p>i)- Based on instrument used</p>
+<p>ii)- Based on method employed</p>
+<p>iii)- Based on Purpose </p>
+<p>iv)- Based on Earth's Curvature </p>
 <hr>
 <button id="complete-sur2" class="complete-btn" onclick="markSectionComplete('sur2')">Mark as Complete</button>
 </div>
 
 <!-- SUR3: Earth's Curvature -->
 <div class="section" id="sur3">
-<h2>3. Based on Earth's Curvature</h2>
+<h2>i) Based on Earth's Curvature</h2>
 <p>This is the primary fundamental classification of survey.</p>
 <p>It's further divided into two types of survey:</p>
 <h4>a) Geodetic surveys</h4>
@@ -147,7 +148,7 @@ window.MathJax = {
 
 <!-- SUR4: Purpose & Field -->
 <div class="section" id="sur4">
-<h2>4. Based on Purpose & Field of Application</h2>
+<h2>ii) Based on Purpose & Field of Application</h2>
 <p>This is how surveys in disciplines are defined by their end use.</p>
 <p><b>Topographic survey:</b> This is survey done to gather data of natural & manmade features on the earth & represent them on a map.</p>
 <h4>b) Cadastral Survey</h4>
@@ -161,35 +162,35 @@ window.MathJax = {
 
 <!-- SUR5: Instruments -->
 <div class="section" id="sur5">
-<h2>5. Based on Instrument Used</h2>
+<h2>iii) Based on Instrument Used</h2>
 <p>This classification is based on the primary tools employed:</p>
-<p>i) <b>Theodolite survey:</b> It is applied when measuring horizontal and vertical angles</p>
-<p>ii) <b>Compass / Chain:</b> It is applied when measuring direction / bearings</p>
-<p>iii) <b>Tapes & Ranging rods:</b> It is applied when measuring distances for small and open areas</p>
-<p>iv) <b>Dumpy levels, Automatic level & Digital levels:</b> They are used to determine height differences and establish elevations.</p>
-<p>v) <b>Echo sounders:</b> Used in mapping the bed & features of water bodies</p>
-<p>vi) <b>Drones & Cameras:</b> Used when creating maps and 3D models from aerial photographs</p>
-<p>vii) <b>Total station:</b> It integrates electronic distance measurement for measuring distances using electromagnetic waves. This is the standard modern distance measurement.</p>
-<p>viii) <b>Remote sensing:</b> Which uses satellites and gathers information about surface without physical interference.</p>
-<p>ix) <b>GPS survey:</b> It determines absolute position i.e. latitude, longitude using satellite.</p>
+<p>a. <b>Theodolite survey:</b> It is applied when measuring horizontal and vertical angles</p>
+<p>b. <b>Compass / Chain:</b> It is applied when measuring direction / bearings</p>
+<p>c. <b>Tapes & Ranging rods:</b> It is applied when measuring distances for small and open areas</p>
+<p>d. <b>Dumpy levels, Automatic level & Digital levels:</b> They are used to determine height differences and establish elevations.</p>
+<p>e. <b>Echo sounders:</b> Used in mapping the bed & features of water bodies</p>
+<p>f. <b>Drones & Cameras:</b> Used when creating maps and 3D models from aerial photographs</p>
+<p>g. <b>Total station:</b> It integrates electronic distance measurement for measuring distances using electromagnetic waves. This is the standard modern distance measurement.</p>
+<p>h. <b>Remote sensing:</b> Which uses satellites and gathers information about surface without physical interference.</p>
+<p>i. <b>GPS survey:</b> It determines absolute position i.e. latitude, longitude using satellite.</p>
 <button id="complete-sur5" class="complete-btn" onclick="markSectionComplete('sur5')">Mark as Complete</button>
 </div>
 
 <!-- SUR6: Methods -->
 <div class="section" id="sur6">
-<h2>6. Based on Method Employed</h2>
+<h2>iv) Based on Method Employed</h2>
 <p>This focus on geometric technique for determining positions.</p>
 <p>Classification based on this survey:</p>
-<p>i) <b>Triangulation:</b> A system of triangles are established, angles are measured precisely & only a few baseline distances are needed.</p>
-<p>ii) <b>Traversing:</b> A series of connected lines are established, the length & directions of this line are measured. It is the most common method of establishing control networks on construction site.</p>
-<p>iii) <b>Trilateration:</b> A network of triangles are established by measuring all the sides with EDM or no angles measured. It is common in EDM i.e. total station surveys which uses the principle of GPS.</p>
+<p>a. <b>Triangulation:</b> A system of triangles are established, angles are measured precisely & only a few baseline distances are needed.</p>
+<p>b. <b>Traversing:</b> A series of connected lines are established, the length & directions of this line are measured. It is the most common method of establishing control networks on construction site.</p>
+<p>c <b>Trilateration:</b> A network of triangles are established by measuring all the sides with EDM or no angles measured. It is common in EDM i.e. total station surveys which uses the principle of GPS.</p>
 <button id="complete-sur6" class="complete-btn" onclick="markSectionComplete('sur6')">Mark as Complete</button>
 </div>
 
 <!-- SUR7: Principles -->
 <div class="section" id="sur7">
-<h2>7. PRINCIPLES OF SURVEY</h2>
-<p><b>4. Principle of working from whole to part:</b> Is achieved by first identifying the primary control point</p>
+<h2>* PRINCIPLES OF SURVEY</h2>
+<p><b>1. Principle of working from whole to part:</b> Is achieved by first identifying the primary control point</p>
 <p><b>Control point:</b> Is a point on the ground whose horizontal and vertical location is known. This points are located with a high precision using sophisticated equipment. Based on this point (primary point) number of large triangles are drawn. Secondary control point are then established to fill the gaps with lesser precision than primary control point. Tertiary control points are also established at a moderate and less precise level.</p>
 
 <div style="text-align:center; margin:1.5rem 0;">
@@ -255,7 +256,7 @@ window.MathJax = {
 
 <!-- SUR8: Process -->
 <div class="section" id="sur8">
-<h2>8. PROCESS OF SURVEYING</h2>
+<h2>* PROCESS OF SURVEYING</h2>
 <p>It is done in three main phases:</p>
 <p>1. Conduct of reconnaissance</p>
 <p>2. Field work and Measurements</p>
@@ -266,11 +267,11 @@ window.MathJax = {
 <p>Walking through the site enables one to understand the terrain and helps in determining the survey method to be adopted and the scale to be used.</p>
 <p>The initial information obtained helps in successful planning and execution of the surveying job.</p>
 <p><b>Objectives of Reconnaissance:</b></p>
-<p>1. To understand what you may be dealing with</p>
-<p>2. To understand which method to be used</p>
-<p>3. Estimate cost and time required</p>
-<p>4. To ascertain the possibility of building or constructing a route</p>
-<p>5. To choose the most suitable position for stations</p>
+<p>i) To understand what you may be dealing with</p>
+<p>ii) To understand which method to be used</p>
+<p>iii) Estimate cost and time required</p>
+<p>iv) To ascertain the possibility of building or constructing a route</p>
+<p>v) To choose the most suitable position for stations</p>
 
 <h4>2. Field Work & Measurement</h4>
 <p>This is where actual measurement and recording are taken to get the best results. The surveyors must be fully familiar with the functions of equipment and take care of them.</p>
@@ -282,7 +283,7 @@ window.MathJax = {
 
 <!-- SUR9: Horizontal Distance -->
 <div class="section" id="sur9">
-<h2>9. Horizontal Distance Measurement</h2>
+<h2>* Horizontal Distance Measurement</h2>
 <p>This is the basic measurement in survey which determines the distance btn 2 points on the earth's surface for use in fixing positions, setting out & scaling.</p>
 <p>The method to be employed in measuring distance depends on accuracy of the measurement and in turn depends on purpose for which the measurement is intended.</p>
 <p><b>Some of the method used:</b></p>
@@ -320,7 +321,7 @@ window.MathJax = {
 
 <!-- SUR10: Errors -->
 <div class="section" id="sur10">
-<h2>10. Errors in Surveying</h2>
+<h2>* Errors in Surveying</h2>
 <p><b>An error is a difference btn measured and true value of quantity.</b></p>
 <p><b>There are three types of survey errors:</b></p>
 <p>i) <b>Gross errors / Mistakes:</b> Mistakes made by surveyer, instrument handler or due to carelessness, inexperience or fatigue.</p>
@@ -330,7 +331,8 @@ window.MathJax = {
 <p>- Using the wrong station or target</p>
 <p>- Entering wrong units</p>
 <p>- Missing a reading</p>
-<p><b>Characteristic of Gross error:</b> Are usually large in magnitude</p>
+<p><b>Characteristic of Gross error:</b> </p>
+<p>1. Are usually large in magnitude</p>
 <p>2. They occur irregularly</p>
 <p>3. They cannot be corrected by mathematical adjustment</p>
 <p><b>Prevention & Control:</b></p>
@@ -400,7 +402,7 @@ window.MathJax = {
 
 <!-- SUR11: Types of Surveyor -->
 <div class="section" id="sur11">
-<h2>11. Types of Surveyor</h2>
+<h2>* Types of Surveyor</h2>
 <p>1. Land Surveyor</p>
 <p>2. Geodetic Surveyor</p>
 <p>3. Hydrographic Surveyors</p>
@@ -417,7 +419,7 @@ window.MathJax = {
 
 <!-- SUR12: Chain Surveying Basics -->
 <div class="section" id="sur12">
-<h2>12. CHAIN SURVEYING</h2>
+<h2>* CHAIN SURVEYING</h2>
 <p>Chain surveying is the simplest and oldest method of surveying whose basic principle involves making linear measurements only i.e. measuring the distance btn points on the ground to determine relative position.</p>
 <p>Unlike modern surveying whichrelying on angles & electronic equipment, chain surveying focuses on measuring distances to create a network of triangles from which a map or plan is plotted.</p>
 
@@ -455,7 +457,7 @@ window.MathJax = {
 
 <!-- SUR13: Equipment & Terms -->
 <div class="section" id="sur13">
-<h2>13. Basic Terms Used in Chain Survey</h2>
+<h2>* Basic Terms Used in Chain Survey</h2>
 <p>1. <b>Survey Station:</b> Main points that form vertices of triangles. Sub-divided into:</p>
 <p>(i) Main Station: Stations taken along boundary area</p>
 <p>(ii) Tie Station: Stations selected on main survey line to locate interior details</p>
@@ -478,7 +480,7 @@ window.MathJax = {
 
 <!-- SUR14: Procedure for Chaining -->
 <div class="section" id="sur14">
-<h2>14. Procedure for Chaining</h2>
+<h2>* Procedure for Chaining</h2>
 <p>1. <b>Conduct a reconnaissance:</b> Walk over the area to be surveying and note the general layout, the positions of features and the shape of the area</p>
 <p>2. <b>Choice of Stations:</b> Design a plan of the framework to be used and drive in the station pegs to mark the station selected</p>
 <p>3. <b>Station Marking:</b> Station marks should be either located somewhere possible to be tied into a permanent object so that they be easily replaced or moved during survey</p>
@@ -512,7 +514,7 @@ window.MathJax = {
 
 <!-- SUR15: Corrections -->
 <div class="section" id="sur15">
-<h2>15. CORRECTIONS IN CHAIN SURVEYING</h2>
+<h2>* CORRECTIONS IN CHAIN SURVEYING</h2>
 <p>All measurements taken in the field are subject to errors. Corrections are applied to get true distances.</p>
 <p><b>1. Correction for Standardization:</b></p>
 <p>If chain is too long: Correction = - Error per chain × No. of chains</p>
@@ -539,7 +541,7 @@ window.MathJax = {
 
 <!-- SUR16: Levelling Terms -->
 <div class="section" id="sur16">
-<h2>16. LEVELLING</h2>
+<h2>* LEVELLING</h2>
 <p>Levelling is the process of determining relative heights or elevations of points on the earth's surface.</p>
 <p><b>Key Terms:</b></p>
 <p>1. <b>Datum:</b> Reference surface for vertical measurements. Mean Sea Level is the common datum.</p>
@@ -568,7 +570,7 @@ window.MathJax = {
 
 <!-- SUR17: Levelling Methods -->
 <div class="section" id="sur17">
-<h2>17. Methods of Levelling</h2>
+<h2>* Methods of Levelling</h2>
 <p><b>1. Rise and Fall Method:</b></p>
 <p>Rise = BS - FS if BS > FS, Fall = FS - BS if FS > BS</p>
 <p>RL of next point = RL of previous point + Rise OR - Fall</p>
@@ -606,7 +608,7 @@ window.MathJax = {
 
 <!-- SUR18: Rise & Fall Examples -->
 <div class="section" id="sur18">
-<h2>18. Rise & Fall Examples + Tables</h2>
+<h2>* Rise & Fall Examples + Tables</h2>
 <h4>Example 1: Simple Rise & Fall</h4>
 <p>The following staff readings were taken: 2.655, 1.230, 0.955, 2.140, 1.605, 2.780, 1.045. First reading on BM of RL 100.000m.</p>
 
@@ -773,7 +775,7 @@ window.MathJax = {
 
 <!-- SUR19: HI Method Examples -->
 <div class="section" id="sur19">
-<h2>19. HI Method Examples + Tables</h2>
+<h2>* HI Method Examples + Tables</h2>
 <h4>Example 1: Height of Instrument Method</h4>
 <p>Same data as Rise & Fall Example 1: 2.655, 1.230, 0.955, 2.140, 1.605, 2.780, 1.045. BM RL = 100.000m</p>
 
@@ -917,7 +919,7 @@ window.MathJax = {
 
 <!-- SUR20: Contours -->
 <div class="section" id="sur20">
-<h2>20. CONTOURS & Methods</h2>
+<h2>* CONTOURS & Methods</h2>
 <p><b>Contour:</b> An imaginary line joining points of equal elevation on the earth's surface.</p>
 <p><b>Contour Interval:</b> Vertical distance between two consecutive contours.</p>
 <p><b>Contour Line:</b> Line on map representing a contour.</p>
