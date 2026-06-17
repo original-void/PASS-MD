@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GBC - General Building Construction Notes</title>
+<title>GBC - General Building Construction</title>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
@@ -11,169 +11,182 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
   :root {
-    --primary: #ff3366;
-    --primary-dark: #e91e63;
+    --primary: #2563eb;
     --bg: #0f172a;
     --card-bg: #1e293b;
     --text: #f1f5f9;
-    --accent: #38bdf8;
-    --success: #25D366;
+    --text-dim: #94a3b8;
+    --border: #334155;
+    --success: #22c55e;
   }
   
     * { margin: 0; padding: 0; box-sizing: border-box; }
   
   body {
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
     color: var(--text);
     min-height: 100vh;
-    padding-bottom: 80px;
-    line-height: 1.8;
+    padding-bottom: 60px;
+  }
+  
+  .progress-bar {
+    height: 4px;
+    background: var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .progress-fill {
+    height: 100%;
+    width: 35%;
+    background: var(--success);
+    transition: width 0.3s;
   }
   
   .top-bar {
-    position: absolute; 
-    top: 15px; 
-    right: 20px; 
-    display: flex; 
-    align-items: center; 
-    gap: 12px; 
-    color: white;
-    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border);
+    background: var(--card-bg);
   }
-  .top-bar span { font-weight: 600; font-size: 14px; }
-  .top-bar button {
-    background: rgba(255,255,255,0.2); 
-    border: none; 
-    padding: 8px 16px; 
-    border-radius: 6px; 
-    color: white; 
-    cursor: pointer;
-    font-weight: 600;
+  .top-bar span { font-size: 13px; color: var(--text-dim); }
+  
+  .header-actions {
+    padding: 16px 20px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 6px 12px;
+    border-radius: 6px;
+    color: var(--text);
     font-size: 13px;
-  }
-  
-  .header {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-    padding: 60px 20px 30px;
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(255, 51, 102, 0.3);
-    position: relative;
-  }
-  
-  .header h1 {
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: white;
-  }
-  
-  .header p {
-    font-size: 0.85rem;
-    opacity: 0.9;
-    margin-top: 8px;
-    color: white;
-  }
-  
-  .back-btn {
-    position: absolute;
-    left: 20px;
-    top: 20px;
-    background: rgba(255,255,255,0.2);
-    border: none;
-    padding: 8px 14px;
-    border-radius: 8px;
-    color: white;
     cursor: pointer;
-    font-weight: 600;
-    font-size: 13px;
+    font-weight: 500;
   }
+  .btn:hover { background: #2d3748; }
   
   .container {
     max-width: 800px;
-    margin: 30px auto;
-    padding: 0 20px;
+    margin: 0 auto;
+    padding: 20px;
   }
   
-  .note-card {
-    background: var(--card-bg);
-    border-radius: 16px;
-    padding: 28px 24px;
-    margin-bottom: 20px;
-    border: 1px solid rgba(255,255,255,0.05);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    border-left: 4px solid var(--primary);
-  }
-  
-  .note-card h2 {
-    color: white;
-    font-size: 1.4rem;
+  h1 {
+    font-size: 1.8rem;
     font-weight: 700;
+    margin-bottom: 8px;
+    color: white;
+  }
+  .subtitle {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+  
+  h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 24px 0 12px;
+    color: white;
+  }
+  
+  .toc {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 24px;
+  }
+  .toc a {
+    display: block;
+    padding: 8px 0;
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .toc a:last-child { border-bottom: none; }
+  .toc a:hover { color: #60a5fa; }
+  
+  .section {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
     margin-bottom: 16px;
   }
-  
-  .note-card h3 {
-    color: var(--accent);
-    font-size: 1.1rem;
+  .section h3 {
+    font-size: 1.2rem;
     font-weight: 600;
-    margin-top: 20px;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--primary);
+    color: white;
   }
-  
-  .note-card h4 {
-    color: var(--primary);
+  .section h4 {
     font-size: 1rem;
     font-weight: 600;
     margin-top: 16px;
     margin-bottom: 8px;
+    color: var(--primary);
   }
-  
-  .note-card p, .note-card li {
+  .section p, .section li {
+    font-size: 15px;
+    line-height: 1.7;
     color: var(--text);
-    font-size: 16px;
-    margin: 10px 0;
+    margin: 8px 0;
   }
-  
-  .note-card ul {
-    padding-left: 22px;
-  }
-  
-  .note-card strong {
-    color: var(--accent);
-    font-weight: 600;
-  }
+  .section ul { padding-left: 20px; }
+  .section strong { color: var(--primary); font-weight: 600; }
   
   .highlight {
-    background: rgba(255, 51, 102, 0.2);
-    padding: 2px 8px;
-    border-radius: 4px;
+    background: rgba(37, 99, 235, 0.2);
+    padding: 2px 6px;
+    border-radius: 3px;
     color: white;
     font-weight: 600;
   }
   
   .sketch {
     background: #0f172a;
-    border: 1px solid rgba(255,51,102,0.3);
-    border-radius: 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
     padding: 16px;
     margin: 16px 0;
     text-align: center;
   }
-  
-  .sketch svg {
-    max-width: 100%;
-    height: auto;
-  }
-  
+  .sketch svg { max-width: 100%; height: auto; }
   .sketch-label {
-    font-size: 13px;
-    color: var(--accent);
+    font-size: 12px;
+    color: var(--text-dim);
     margin-top: 8px;
     font-weight: 600;
   }
+  
+  .complete-btn {
+    background: var(--success);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 16px;
+  }
+  .complete-btn:hover { background: #16a34a; }
   
   .whatsapp-btn {
     display: flex;
@@ -184,11 +197,11 @@
     max-width: 400px;
     margin: 40px auto 0;
     padding: 14px;
-    background: var(--success);
+    background: #25D366;
     color: white;
     border: none;
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
     text-decoration: none;
@@ -197,484 +210,441 @@
 </head>
 <body>
 
+<div class="progress-bar"><div class="progress-fill"></div></div>
+
 <div class="top-bar">
+  <span>7/20 sections completed</span>
   <span id="user-display">Loading...</span>
-  <button onclick="logout()">Logout</button>
 </div>
 
-<div class="header">
-  <button class="back-btn" onclick="window.location.href='home.html'">← Back</button>
-  <h1>GENERAL BUILDING CONSTRUCTION</h1>
-  <p>KNEC Notes - Module 1 | Units 1-5 Complete</p>
+<div class="header-actions">
+  <button class="btn" onclick="window.location.href='home.html'">← Back to Subjects</button>
+  <button class="btn">🌓 Theme</button>
+  <button class="btn" onclick="window.print()">📄 PDF</button>
+  <button class="btn" onclick="logout()">Logout</button>
 </div>
 
 <div class="container">
-
-<div class="note-card">
-  <h2>📘 UNIT 1: INTRODUCTION TO CONSTRUCTION</h2>
+  <h1>GENERAL BUILDING CONSTRUCTION</h1>
+  <p class="subtitle">Complete Notes - Introduction, Site Investigation, Demolition, Levelling, Setting Out, Excavation & Timbering, Foundations, Settlement, Types of Foundations</p>
   
-  <h3>Evolution to building environment</h3>
-  <p><strong>Environment</strong> = surroundings which can be natural, man-made or a combination of these.</p>
-  <p><strong>Built Environment</strong> = created by man with or without the aid of the natural environment.</p>
-  
-  <h3>EVOLUTION OF BUILT ENVIRONMENT</h3>
-  <ul>
-    <li><strong>1) Pre-Historic dwellings:</strong> When man was a hunter & gatherer, dwellings were natural caves. With population increase, man carved more caves + constructed simple structures.</li>
-    <li><strong>2) Traditional dwellings:</strong> Development from simple shelters as population increased + industrialization adapted.</li>
-    <li><strong>3) Modern buildings:</strong> Use functional structural components i.e columns, beams, canopies and reinforced concrete slabs.</li>
-  </ul>
-  
-  <h3>Stages involved in building progress</h3>
-  <ul>
-    <li><strong>1) Inception:</strong> proper briefing of the concerned parties</li>
-    <li><strong>2) Conception:</strong> communication among the designed teams</li>
-    <li><strong>3) Select:</strong> identification of the place where the building has to be constructed</li>
-    <li><strong>4) Construction:</strong> actual doing of the work to come up with the required structure</li>
-  </ul>
-</div>
-
-<div class="note-card">
-  <h2>📍 UNIT 2: SITE INVESTIGATION</h2>
-  
-  <p><strong>Site investigation</strong> - activities that have to be undertaken in order to collect data systematically and in order needed in design and construction process.</p>
-  
-  <h3>Data needed during site investigation</h3>
-  <ul>
-    <li><strong>a) Site access</strong> i.e Roads, boundary lines, location</li>
-    <li><strong>b) Existing services</strong> i.e sewer line, water drains, electricity, telephone</li>
-    <li><strong>c) Adjoining structures</strong> i.e existing buildings, trees on the adjacent site</li>
-    <li><strong>d) Soil conditions</strong> - soil types, properties and ground water condition</li>
-  </ul>
-  
-  <h3>Soil Investigation vs Site Investigation</h3>
-  <p><strong>Site Investigation</strong> - all embracing term covering every aspect of the site.</p>
-  <p><strong>Soil Investigation</strong> - is related specifically to the sub soil beneath the site.</p>
-  
-  <h3>Purpose of Soil Investigation</h3>
-  <ul>
-    <li>1. To determine whether the site is suitable for the proposed project</li>
-    <li>2. To determine adequate and economic foundation design</li>
-    <li>3. To determine difficulties which are likely to be encountered during construction</li>
-    <li>4. To determine the occurrence or cause of changes in sub soil conditions</li>
-  </ul>
-  
-  <h3>Soil Samples</h3>
-  <p><strong>Disturbed Soil Samples</strong> - obtained from boreholes and trial pits. The structure of the sample is disturbed but are suitable for grading, moisture content and other laboratory test.</p>
-  <p><strong>Undisturbed Soil Samples</strong> - obtained using boring tools in such a manner as to preserve the natural structure. Suitable for rock and clay. Samples are laid in wooden boxes and taken for testing in the laboratory.</p>
-  
-  <h3>Methods of soil investigation</h3>
-  <ul>
-    <li><strong>1. Trial pits:</strong> Foundations up to <span class="highlight">3,000mm deep</span></li>
-    <li><strong>2. Borings:</strong> Foundations up to <span class="highlight">30,000mm deep</span></li>
-    <li><strong>3. Deep borings:</strong> Foundations over <span class="highlight">30,000mm deep</span></li>
-  </ul>
-  
-  <h3>Activities done during site clearance</h3>
-  <ul>
-    <li>I. Clearance of trees and bushes</li>
-    <li>II. Removal of vegetable soil/top soil</li>
-    <li>III. Removal of termite nets</li>
-    <li>IV. Demolition of unwanted structures</li>
-  </ul>
-</div>
-
-<div class="note-card">
-  <h2>💥 DEMOLITION</h2>
-  
-  <h3>I. Taking down</h3>
-  <p>Is the careful removal of all salvageable materials prior to complete destruction. It requires knowledge of load bearing members. May require propping, strutting and shoring.</p>
-  
-  <h3>II. Demolition</h3>
-  <p>Is the complete removal of structural members. A survey of the structure and the neighboring structures must be carried out. Photographs must be taken and stored safely.</p>
-  
-  <h3>Methods of demolition</h3>
-  <ul>
-    <li><strong>Hand demolition:</strong> Using hand tools. <span class="highlight">NB:</span> Objects should not freely drop if above ground.</li>
-    <li><strong>Pusher arm:</strong> Machine with steel pusher arm. Needs firm base with <span class="highlight">6 meters</span> clear operating base.</li>
-    <li><strong>Deliberate demolition:</strong> Removal of key member causing the structure to collapse. Expert advice required.</li>
-    <li><strong>Ball technique:</strong> Swinging demolition ball by a crane against the structure.</li>
-  </ul>
-</div>
-
-<div class="note-card">
-  <h2>📏 UNIT 3: LEVELLING</h2>
-  
-  <p><strong>LEVELLING</strong> - Is process of establishing heights, dimension relative to fixed point of data.</p>
-  
-  <h3>Tools/ equipment used</h3>
-  <ul>
-    <li>I. Building line/string, II. Hammer/mallet, III. Pegs, IV. Jembes, V. Spade, VI. Graders, bulldozers, rollers</li>
-  </ul>
-  
-  <h3>Methods of levelling</h3>
-  <p><strong>I. Cut and fill:</strong> Amount of cut = amount of fill. Soil from upper part is deposited on lower part.</p>
-  <p><strong>II. Cut:</strong> Gives undisturbed ground. Disadvantage: cost of removing soil.</p>
-  <p><strong>III. Fill:</strong> Not the best. Risk of settlement, needs deeper foundation.</p>
-</div>
-
-<div class="note-card">
-  <h2>📍 UNIT 4: SETTING OUT</h2>
-  
-  <p><strong>SETTING OUT</strong> - Is the establishment of marks and lines to determine position and level of construction elements.</p>
-  
-  <h3>First tasks</h3>
-  <ul>
-    <li><strong>I. Baseline</strong> - All setting out relates to it. Coincides with the building line given by the local authority.</li>
-    <li><strong>II. Site level/bench mark</strong> - Fixed point like drain cover or post for floor/drainage levels.</li>
-  </ul>
-  
-  <h4>I. 3-4-5 Method Sketch</h4>
-  <div class="sketch">
-    <svg width="300" height="200" viewBox="0 0 300 200">
-      <line x1="50" y1="150" x2="170" y2="150" stroke="#38bdf8" stroke-width="3"/>
-      <line x1="50" y1="150" x2="50" y2="50" stroke="#38bdf8" stroke-width="3"/>
-      <line x1="50" y1="50" x2="170" y2="150" stroke="#ff3366" stroke-width="3" stroke-dasharray="5,5"/>
-      <text x="100" y="165" fill="white" font-size="12">3m</text>
-      <text x="35" y="100" fill="white" font-size="12">4m</text>
-      <text x="100" y="90" fill="#ff3366" font-size="12">5m</text>
-      <circle cx="50" cy="150" r="4" fill="#ff3366"/>
-      <circle cx="170" cy="150" r="4" fill="#ff3366"/>
-      <circle cx="50" cy="50" r="4" fill="#ff3366"/>
-      <text x="45" y="145" fill="white" font-size="10">A</text>
-      <text x="165" y="145" fill="white" font-size="10">B</text>
-      <text x="45" y="45" fill="white" font-size="10">C</text>
-    </svg>
-    <div class="sketch-label">Right angle triangle 3m-4m-5m. Check diagonals AC = BD</div>
+  <h2>Table of Contents</h2>
+  <div class="toc">
+    <a href="#unit1">1. UNIT 1: Introduction to Construction</a>
+    <a href="#unit2">2. UNIT 2: Site Investigation</a>
+    <a href="#demolition">3. Demolition</a>
+    <a href="#unit3">4. UNIT 3: Levelling</a>
+    <a href="#unit4">5. UNIT 4: Setting Out</a>
+    <a href="#excavation">6. Excavation and Timbering</a>
+    <a href="#unit5">7. UNIT 5: Foundations</a>
   </div>
-  
-  <h3>SETTING OUT METHODS</h3>
-  
-  <h4>I. 3-4-5 Method</h4>
-  <p>Uses Pythagoras theorem. Triangle <span class="highlight">3m, 4m, 5m</span> with right angle. Check by diagonals AC & DB must be equal. <strong>Advantages:</strong> Simple, no calculation, accuracy self-evident.</p>
-  
-  <h4>II. Builders Square Method</h4>
-  <p>Place square at A, extend string = AD. Repeat at B. Check diagonals AC & DB. <strong>Advantages:</strong> Very accurate for small rectangular buildings.</p>
-  
-  <h4>III. Surveying Instruments</h4>
-  <p>Tripod + sighted. Range limited to <span class="highlight">33m</span>.</p>
-  
-  <h4>Profile Boards Sketch</h4>
-  <div class="sketch">
-    <svg width="300" height="180" viewBox="0 0 300 180">
-      <rect x="40" y="40" width="20" height="100" fill="#8b5a2b" stroke="white" stroke-width="1"/>
-      <rect x="240" y="40" width="20" height="100" fill="#8b5a2b" stroke="white" stroke-width="1"/>
-      <line x1="50" y1="60" x2="250" y2="60" stroke="#ff3366" stroke-width="2"/>
-      <line x1="50" y1="90" x2="250" y2="90" stroke="#ff3366" stroke-width="2"/>
-      <line x1="50" y1="120" x2="250" y2="120" stroke="#ff3366" stroke-width="2"/>
-      <rect x="90" y="130" width="120" height="20" fill="#666" stroke="white" stroke-width="1"/>
-      <text x="135" y="145" fill="white" font-size="10">Trench</text>
-      <text x="20" y="30" fill="#38bdf8" font-size="10">600-1000mm</text>
-      <text x="20" y="150" fill="#38bdf8" font-size="10">450-600mm</text>
-    </svg>
-    <div class="sketch-label">Posts 450-600mm deep, 600-1000mm above. 3 strings show wall thickness + trench width</div>
+
+  <div class="section" id="unit1">
+    <h3>UNIT 1: Introduction to Construction</h3>
+    <h4>Evolution to building environment</h4>
+    <p><strong>Environment</strong> = surroundings which can be natural, man-made or a combination of these.</p>
+    <p><strong>Built Environment</strong> = created by man with or without the aid of the natural environment.</p>
+    
+    <h4>EVOLUTION OF BUILT ENVIRONMENT</h4>
+    <ul>
+      <li><strong>1) Pre-Historic dwellings:</strong> When man was a hunter & gatherer, dwellings were natural caves. With population increase, man carved more caves + constructed simple structures.</li>
+      <li><strong>2) Traditional dwellings:</strong> Development from simple shelters as population increased + industrialization adapted.</li>
+      <li><strong>3) Modern buildings:</strong> Use functional structural components i.e columns, beams, canopies and reinforced concrete slabs.</li>
+    </ul>
+    
+    <h4>Stages involved in building progress</h4>
+    <ul>
+      <li><strong>1) Inception:</strong> proper briefing of the concerned parties</li>
+      <li><strong>2) Conception:</strong> communication among the designed teams</li>
+      <li><strong>3) Select:</strong> identification of the place where the building has to be constructed</li>
+      <li><strong>4) Construction:</strong> actual doing of the work to come up with the required structure</li>
+    </ul>
+    <button class="complete-btn">Mark as Complete</button>
   </div>
-  
-  <h3>PROFILE BOARDS</h3>
-  <p>Is the temporary timber framework provided to guide the excavation of the trench. The vertical posts are sunk <span class="highlight">450-600mm deep</span> and left <span class="highlight">600-1000mm</span> above the ground. The number of nails outline the thickness of the wall and the width of the trench.</p>
-  <p><span class="highlight">NB:</span> Profile boards must be set up before excavation begins.</p>
-  
-  <h3>Setting out a Circular Building</h3>
-  <h4>String & Spike Method Sketch</h4>
-  <div class="sketch">
-    <svg width="280" height="280" viewBox="0 0 280 280">
-      <circle cx="140" cy="140" r="80" fill="none" stroke="#ff3366" stroke-width="3"/>
-      <circle cx="140" cy="140" r="100" fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="5,5"/>
-      <circle cx="140" cy="140" r="4" fill="white"/>
-      <text x="135" y="145" fill="white" font-size="10">Centre</text>
-      <line x1="140" y1="140" x2="220" y2="140" stroke="#ff3366" stroke-width="1" stroke-dasharray="3,3"/>
-      <text x="180" y="135" fill="white" font-size="10">Radius</text>
-    </svg>
-    <div class="sketch-label">Peg at centre, string tight, rotate to mark circumference + wall thickness</div>
+
+  <div class="section" id="unit2">
+    <h3>UNIT 2: Site Investigation</h3>
+    <p><strong>Site investigation</strong> - activities that have to be undertaken in order to collect data systematically and in order needed in design and construction process.</p>
+    
+    <h4>Data needed during site investigation</h4>
+    <ul>
+      <li><strong>a) Site access</strong> i.e Roads, boundary lines, location</li>
+      <li><strong>b) Existing services</strong> i.e sewer line, water drains, electricity, telephone</li>
+      <li><strong>c) Adjoining structures</strong> i.e existing buildings, trees on the adjacent site</li>
+      <li><strong>d) Soil conditions</strong> - soil types, properties and ground water condition</li>
+    </ul>
+    
+    <h4>Soil Investigation vs Site Investigation</h4>
+    <p><strong>Site Investigation</strong> - all embracing term covering every aspect of the site.</p>
+    <p><strong>Soil Investigation</strong> - is related specifically to the sub soil beneath the site.</p>
+    
+    <h4>Purpose of Soil Investigation</h4>
+    <ul>
+      <li>1. To determine whether the site is suitable for the proposed project</li>
+      <li>2. To determine adequate and economic foundation design</li>
+      <li>3. To determine difficulties which are likely to be encountered during construction</li>
+      <li>4. To determine the occurrence or cause of changes in sub soil conditions</li>
+    </ul>
+    
+    <h4>Soil Samples</h4>
+    <p><strong>Disturbed Soil Samples</strong> - obtained from boreholes and trial pits. The structure of the sample is disturbed but are suitable for grading, moisture content and other laboratory test.</p>
+    <p><strong>Undisturbed Soil Samples</strong> - obtained using boring tools in such a manner as to preserve the natural structure. Suitable for rock and clay. Samples are laid in wooden boxes and taken for testing in the laboratory.</p>
+    
+    <h4>Methods of soil investigation</h4>
+    <ul>
+      <li><strong>1. Trial pits:</strong> Foundations up to <span class="highlight">3,000mm deep</span></li>
+      <li><strong>2. Borings:</strong> Foundations up to <span class="highlight">30,000mm deep</span></li>
+      <li><strong>3. Deep borings:</strong> Foundations over <span class="highlight">30,000mm deep</span></li>
+    </ul>
+    
+    <h4>Activities done during site clearance</h4>
+    <ul>
+      <li>I. Clearance of trees and bushes</li>
+      <li>II. Removal of vegetable soil/top soil</li>
+      <li>III. Removal of termite nets</li>
+      <li>IV. Demolition of unwanted structures</li>
+    </ul>
+    <button class="complete-btn">Mark as Complete</button>
   </div>
-  <p><strong>1. String and spike method:</strong> Peg at centre, string tight, move around.</p>
-  <p><strong>2. Trammel method:</strong> Main advantage - not prone to inaccuracy of un-tightening which string and spike has as a disadvantage.</p>
+
+  <div class="section" id="demolition">
+    <h3>Demolition</h3>
+    <h4>I. Taking down</h4>
+    <p>Is the careful removal of all salvageable materials prior to complete destruction. It requires knowledge of load bearing members. May require propping, strutting and shoring.</p>
+    
+    <h4>II. Demolition</h4>
+    <p>Is the complete removal of structural members. A survey of the structure and the neighboring structures must be carried out. Photographs must be taken and stored safely.</p>
+    
+    <h4>Methods of demolition</h4>
+    <ul>
+      <li><strong>Hand demolition:</strong> Using hand tools. <span class="highlight">NB:</span> Objects should not freely drop if above ground.</li>
+      <li><strong>Pusher arm:</strong> Machine with steel pusher arm. Needs firm base with <span class="highlight">6 meters</span> clear operating base.</li>
+      <li><strong>Deliberate demolition:</strong> Removal of key member causing the structure to collapse. Expert advice required.</li>
+      <li><strong>Ball technique:</strong> Swinging demolition ball by a crane against the structure.</li>
+    </ul>
+    <button class="complete-btn">Mark as Complete</button>
+  </div>
+
+  <div class="section" id="unit3">
+    <h3>UNIT 3: Levelling</h3>
+    <p><strong>LEVELLING</strong> - Is process of establishing heights, dimension relative to fixed point of data.</p>
+    
+    <h4>Tools/ equipment used</h4>
+    <ul>
+      <li>I. Building line/string, II. Hammer/mallet, III. Pegs, IV. Jembes, V. Spade, VI. Graders, bulldozers, rollers</li>
+    </ul>
+    
+    <h4>Methods of levelling</h4>
+    <p><strong>I. Cut and fill:</strong> Amount of cut = amount of fill. Soil from upper part is deposited on lower part.</p>
+    <p><strong>II. Cut:</strong> Gives undisturbed ground. Disadvantage: cost of removing soil.</p>
+    <p><strong>III. Fill:</strong> Not the best. Risk of settlement, needs deeper foundation.</p>
+    <button class="complete-btn">Mark as Complete</button>
+  </div>
+
+  <div class="section" id="unit4">
+    <h3>UNIT 4: Setting Out</h3>
+    <p><strong>SETTING OUT</strong> - Is the establishment of marks and lines to determine position and level of construction elements.</p>
+    
+    <h4>First tasks</h4>
+    <ul>
+      <li><strong>I. Baseline</strong> - All setting out relates to it. Coincides with the building line given by the local authority.</li>
+      <li><strong>II. Site level/bench mark</strong> - Fixed point like drain cover or post for floor/drainage levels.</li>
+    </ul>
+    
+    <h4>3-4-5 Method Sketch</h4>
+    <div class="sketch">
+      <svg width="300" height="200" viewBox="0 0 300 200">
+        <line x1="50" y1="150" x2="170" y2="150" stroke="#2563eb" stroke-width="3"/>
+        <line x1="50" y1="150" x2="50" y2="50" stroke="#2563eb" stroke-width="3"/>
+        <line x1="50" y1="50" x2="170" y2="150" stroke="#ff3366" stroke-width="3" stroke-dasharray="5,5"/>
+        <text x="100" y="165" fill="white" font-size="12">3m</text>
+        <text x="35" y="100" fill="white" font-size="12">4m</text>
+        <text x="100" y="90" fill="#ff3366" font-size="12">5m</text>
+        <circle cx="50" cy="150" r="4" fill="#ff3366"/>
+        <circle cx="170" cy="150" r="4" fill="#ff3366"/>
+        <circle cx="50" cy="50" r="4" fill="#ff3366"/>
+        <text x="45" y="145" fill="white" font-size="10">A</text>
+        <text x="165" y="145" fill="white" font-size="10">B</text>
+        <text x="45" y="45" fill="white" font-size="10">C</text>
+      </svg>
+      <div class="sketch-label">Right angle triangle 3m-4m-5m. Check diagonals AC = BD</div>
+    </div>
+    
+    <h4>SETTING OUT METHODS</h4>
+    <p><strong>I. 3-4-5 Method:</strong> Uses Pythagoras theorem. Triangle <span class="highlight">3m, 4m, 5m</span> with right angle. Check by diagonals AC & DB must be equal. Advantages: Simple, no calculation, accuracy self-evident.</p>
+    <p><strong>II. Builders Square Method:</strong> Place square at A, extend string = AD. Repeat at B. Check diagonals AC & DB. Advantages: Very accurate for small rectangular buildings.</p>
+    <p><strong>III. Surveying Instruments:</strong> Tripod + sighted. Range limited to <span class="highlight">33m</span>.</p>
+    
+    <h4>Profile Boards Sketch</h4>
+    <div class="sketch">
+      <svg width="300" height="180" viewBox="0 0 300 180">
+        <rect x="40" y="40" width="20" height="100" fill="#8b5a2b" stroke="white" stroke-width="1"/>
+        <rect x="240" y="40" width="20" height="100" fill="#8b5a2b" stroke="white" stroke-width="1"/>
+        <line x1="50" y1="60" x2="250" y2="60" stroke="#ff3366" stroke-width="2"/>
+        <line x1="50" y1="90" x2="250" y2="90" stroke="#ff3366" stroke-width="2"/>
+        <line x1="50" y1="120" x2="250" y2="120" stroke="#ff3366" stroke-width="2"/>
+        <rect x="90" y="130" width="120" height="20" fill="#666" stroke="white" stroke-width="1"/>
+        <text x="135" y="145" fill="white" font-size="10">Trench</text>
+        <text x="20" y="30" fill="#2563eb" font-size="10">600-1000mm</text>
+        <text x="20" y="150" fill="#2563eb" font-size="10">450-600mm</text>
+      </svg>
+      <div class="sketch-label">Posts 450-600mm deep, 600-1000mm above. 3 strings show wall thickness + trench width</div>
+    </div>
+    
+    <h4>PROFILE BOARDS</h4>
+    <p>Is the temporary timber framework provided to guide the excavation of the trench. The vertical posts are sunk <span class="highlight">450-600mm deep</span> and left <span class="highlight">600-1000mm</span> above the ground. The number of nails outline the thickness of the wall and the width of the trench.</p>
+    <p><span class="highlight">NB:</span> Profile boards must be set up before excavation begins.</p>
+    
+    <h4>Setting out a Circular Building Sketch</h4>
+    <div class="sketch">
+      <svg width="280" height="280" viewBox="0 0 280 280">
+        <circle cx="140" cy="140" r="80" fill="none" stroke="#ff3366" stroke-width="3"/>
+        <circle cx="140" cy="140" r="100" fill="none" stroke="#2563eb" stroke-width="2" stroke-dasharray="5,5"/>
+        <circle cx="140" cy="140" r="4" fill="white"/>
+        <text x="135" y="145" fill="white" font-size="10">Centre</text>
+        <line x1="140" y1="140" x2="220" y2="140" stroke="#ff3366" stroke-width="1" stroke-dasharray="3,3"/>
+        <text x="180" y="135" fill="white" font-size="10">Radius</text>
+      </svg>
+      <div class="sketch-label">Peg at centre, string tight, rotate to mark circumference + wall thickness</div>
+    </div>
+    <p><strong>1. String and spike method:</strong> Peg at centre, string tight, move around.</p>
+    <p><strong>2. Trammel method:</strong> Main advantage - not prone to inaccuracy of un-tightening which string and spike has as a disadvantage.</p>
+    <button class="complete-btn">Mark as Complete</button>
+  </div>
+
+  <div class="section" id="excavation">
+    <h3>Excavation and Timbering</h3>
+    <h4>Excavation</h4>
+    <p><strong>Excavation</strong> - is the removal of earth to form a cavity in the ground for foundation or basements.</p>
+    
+    <h4>Trench excavation</h4>
+    <p>Narrow excavation primarily for strip foundation. Can be done manually or mechanically. Can have <strong>battered faces</strong> or <strong>vertically straight faces</strong>.</p>
+    <ul>
+      <li><strong>Battered faces:</strong> Advantage - no temporary supports required. Disadvantage - extra cost of excavation + extra backfilling.</li>
+      <li><strong>Straight faces:</strong> Advantage - minimum soil removed = minimum backfilling. Disadvantage - site requires <span class="highlight">timbering</span>.</li>
+    </ul>
+    
+    <h4>Timbering</h4>
+    <p><strong>Timbering</strong> - Is the temporary supports provided on the sides of trench to avoid collapsing.</p>
+    <p><span class="highlight">NB:</span> Amount of support required depends on the strength of the soil.</p>
+    
+    <h4>Reasons for timbering</h4>
+    <ul>
+      <li>I. To protect the operatives working in the excavation</li>
+      <li>II. To keep excavation open by acting as retaining wall to sides of trench</li>
+    </ul>
+    
+    <h4>Factors to consider when providing Timbering</h4>
+    <ul>
+      <li>I. Type of soil</li>
+      <li>II. Time excavation will remain open</li>
+      <li>III. Depth of the excavation</li>
+      <li>IV. Load around the excavation</li>
+      <li>V. Vibration from nearby equipment</li>
+      <li>VI. Weather conditions - rain season requires more support</li>
+    </ul>
+    
+    <p><span class="highlight">NB:</span> Timbering provided differently depending on soil type:</p>
+    <ul>
+      <li>I. Timbering in hard dry soils</li>
+      <li>II. Timbering in dry loose soils</li>
+      <li>III. Timbering in loose wet soils</li>
+      <li>IV. Timbering in firm soils</li>
+    </ul>
+    
+    <h4>Methods of protecting sides of trenches</h4>
+    <ul>
+      <li><strong>a) Soils heaps</strong> - soil heaped along given height to prevent accident</li>
+      <li><strong>b) Side rail</strong> - rails erected along trench site on both sides to prevent people from moving close to trench</li>
+      <li><strong>c) Drum filled with soils and having rail/ropes</strong></li>
+    </ul>
+    <button class="complete-btn">Mark as Complete</button>
+  </div>
+
+  <div class="section" id="unit5">
+    <h3>UNIT 5: Foundations</h3>
+    <h4>FOUNDATION</h4>
+    <p><strong>Foundation</strong> - is the lower portion of the building usually located below ground level, which transmits the load of the super structure to the sub soil.</p>
+    <p><strong>Or</strong> - part of building in direct contact with ground that transverse all loads to ground safely.</p>
+    <p>It has to support and safely transmit total load. Foundation is designed to overcome problems like cracking, settling, shrinkage and explosion of both soil and foundation material.</p>
+    
+    <h4>Total Loading comprises:</h4>
+    <ul>
+      <li><strong>Live loads</strong> - movable loads: furniture, human beings</li>
+      <li><strong>Dead loads</strong> - fixed loads: walls, roof, floors</li>
+    </ul>
+    
+    <h4>Building code requirement {functional requirement}</h4>
+    <p>Building regulation require that:</p>
+    <ul>
+      <li><strong>a)</strong> Foundation shall safely sustain + transmit combined dead + live loads so as not to cause settlement/movement</li>
+      <li><strong>b)</strong> Be of such depth + constructed to avoid damage by swelling or shrinkage of subsoil</li>
+      <li><strong>c)</strong> Be capable of resisting chemicals attack by sulphates or other corrosive materials</li>
+    </ul>
+    
+    <h4>Functions of foundation</h4>
+    <p><strong>a) Distribution of load:</strong> Soil cannot carry load intensity as much as walls/columns. Foundation distributes load over large area so soil takes intensity safely.</p>
+    <p><strong>b) Minimizing unequal settlement:</strong> All walls/columns distribute load for equal settlement. Foundation minimizes unwanted additional forces + unequal settlement.</p>
+    <p><strong>c) Providing stability:</strong> Building should not move/overturn under lateral forces. Foundation provides firm anchorage + stability.</p>
+    <p><strong>d) Provide level surface:</strong> Foundation provides level surface to build plinth + superstructure.</p>
+    <p><strong>e) Safety against undermining:</strong> Foundation provides safety against undermining by floods or burrowing by animals.</p>
+    <p><strong>f) Prevention of soil movement:</strong> Prevents movement of soil under building due to water flow or soil expansion.</p>
+    
+    <h4>Factors to consider in selection of foundation</h4>
+    <ul>
+      <li><strong>a) Stability</strong> - ability to carry loadings without undue settlement/deformation. Depends on type of sub strata + amount of water.</li>
+      <li><strong>b) Loading</strong> - ability to support weight + imposed load + transmit forces to natural foundation.</li>
+      <li><strong>c) Ability to sustain small movements</strong> at foundation level without endangering load bearing capacity. Achieved by stiff/rigid design or accommodating small movements.</li>
+    </ul>
+    
+    <h4>Causes of ground movements</h4>
+    <ul>
+      <li><strong>a) Subsidence due to underground mining:</strong> Tunnels need props. Props corrode/rot → columns collapse → strata above settles.</li>
+      <li><strong>b) Overloading of soils:</strong> Deforms sub soils in region of foundation.</li>
+      <li><strong>c) Lowering of groundwater table:</strong> Voids previously occupied by water become empty.</li>
+      <li><strong>d) Increasing in water table:</strong> Certain soils lose cohesion → load bearing capacity drops.</li>
+      <li><strong>e) Freezing of moisture:</strong> Water expands when freezing → <span class="highlight">frost heave</span> as soil particles forced apart.</li>
+      <li><strong>f) Settlement:</strong> If building weight > weight of soil previously on area → settlement expected but acceptable if uniform.</li>
+    </ul>
+    
+    <h4>SETTLEMENT</h4>
+    <p><strong>Types of settlement:</strong></p>
+    <ul>
+      <li><strong>a) Immediate settlement:</strong> Takes place as building is constructed. Occurs in non-cohesive soils.</li>
+      <li><strong>b) Consolidated settlement:</strong> Occurs gradually with time, may continue for years after completion. Mainly in cohesive soils i.e clay.</li>
+    </ul>
+    
+    <p><strong>Causes of settlement:</strong> a) Deformation of soil due to imposed loads b) Seasonal swelling and shrinkage c) Mass movement d) Vibrations due to pile driving e) Adjacent excavation f) Earth-quakes</p>
+    
+    <p><strong>Effects of settlement:</strong> a) Cracks b) Sinking c) Collapsing d) Sliding e) Overstressing</p>
+    
+    <h4>TYPES OF FOUNDATION</h4>
+    <p>Foundations classified into 2 categories: <strong>a) Shallow foundations</strong> b) Deep foundations</p>
+    <p><strong>Shallow foundations:</strong> Usually located no more than <span class="highlight">2000mm</span> below lowest finished floor. Used when soil close to surface has sufficient bearing capacity + underlying strata do not cause undue settlement.</p>
+    <p><strong>They include:</strong> Strip foundation, Pad foundation, Raft foundation</p>
+    <p><strong>Deep foundations:</strong> Pile foundation, Pier foundation</p>
+    
+    <h4>I. STRIP FOUNDATIONS</h4>
+    <p><strong>a) Shallow/traditional strip foundations:</strong> Used where soil has good bearing capacity. Continuous strip of plain concrete spreads load uniformly from walls to subsoil. Spread depends on bearing capacity + shear strength.</p>
+    
+    <h4>Strip Foundation Sketch</h4>
+    <div class="sketch">
+      <svg width="320" height="220" viewBox="0 0 320 220">
+        <rect x="120" y="60" width="80" height="60" fill="#d4a574" stroke="white" stroke-width="2"/>
+        <text x="145" y="95" fill="black" font-size="10">Wall</text>
+        <rect x="80" y="120" width="160" height="30" fill="#999" stroke="white" stroke-width="2"/>
+        <text x="125" y="140" fill="white" font-size="10">Concrete</text>
+        <rect x="80" y="150" width="160" height="20" fill="#555" stroke="white" stroke-width="1"/>
+        <text x="130" y="165" fill="white" font-size="9">Blinding</text>
+        <rect x="80" y="170" width="160" height="25" fill="#777" stroke="white" stroke-width="1"/>
+        <text x="130" y="187" fill="white" font-size="9">150mm Hardcore</text>
+        <line x1="120" y1="60" x2="90" y2="120" stroke="#2563eb" stroke-width="1" stroke-dasharray="3,3"/>
+        <text x="85" y="80" fill="#2563eb" font-size="10">45°</text>
+        <text x="250" y="135" fill="white" font-size="10">W = 3x wall width</text>
+      </svg>
+      <div class="sketch-label">Load spreads at 45°. Width = 3x wall. 150mm hardcore base</div>
+    </div>
+    
+    <p><span class="highlight">NB:</span> In all cases W must give adequate working place <span class="highlight">450-600mm</span> minimum depending on depth.</p>
+    
+    <h4>Design consideration</h4>
+    <ul>
+      <li>Load transmitted at <span class="highlight">45°</span> from base of wall to soil</li>
+      <li>Depth of strip must be equal to or greater than overall width of wall</li>
+      <li>Width of foundation must be <span class="highlight">3 times</span> width of supported wall</li>
+      <li>Compacted hardcore base minimum <span class="highlight">150mm</span> for subfloor platform</li>
+    </ul>
+    
+    <p><strong>b) Reinforced / wide strip:</strong> Used in subsoil with poor/low bearing capacity: soft sand, clays, silt, build-up soils. Reinforced in transverse + longitudinal direction to resist cracking. Reinforcements lapped at corners.</p>
+    
+    <p><strong>c) Deep Strip Foundation:</strong> Depth <span class="highlight">900mm</span>. Used in shrinkable clayey soil to counteract seasonal variation. Clay shrinks dry season, swells wet season. Provides greater resistance to fracture from unequal settlement.</p>
+    
+    <p><strong>d) Stepped strip foundations:</strong> Used on sloping grounds to reduce excavation, backfilling, surplus soil removal, trench timbering. Each step <span class="highlight">150mm-225mm</span> high. Lap of concrete at steps not less than concrete foundation depth & not less than <span class="highlight">300mm</span>. DPC may also be stepped.</p>
+    
+    <h4>Stepped Strip Foundation Sketch</h4>
+    <div class="sketch">
+      <svg width="320" height="200" viewBox="0 0 320 200">
+        <polyline points="60,50 60,100 110,100 110,130 160,130 160,160 210,160" fill="none" stroke="#ff3366" stroke-width="3"/>
+        <rect x="50" y="100" width="10" height="80" fill="#999" stroke="white" stroke-width="1"/>
+        <rect x="100" y="130" width="10" height="50" fill="#999" stroke="white" stroke-width="1"/>
+        <rect x="150" y="160" width="10" height="20" fill="#999" stroke="white" stroke-width="1"/>
+        <text x="75" y="95" fill="white" font-size="10">150-225mm</text>
+        <text x="125" y="125" fill="white" font-size="10">150-225mm</text>
+        <line x1="160" y1="160" x2="210" y2="160" stroke="#2563eb" stroke-width="1"/>
+        <text x="165" y="155" fill="#2563eb" font-size="10">Lap ≥300mm</text>
+      </svg>
+      <div class="sketch-label">Each step 150-225mm high. Lap not less than 300mm</div>
+    </div>
+    
+    <h4>2. RAFT FOUNDATION {FLOATING FOUNDATION}</h4>
+    <p>Large continuous footing supporting all columns. Covers entire building area + may extend beyond. Up to <span class="highlight">300mm thick</span> reinforced concrete.</p>
+    <p><strong>Used for:</strong> Soils with poor bearing capacity, variations in soil conditions, heavier loads, significant differential settlement.</p>
+    
+    <p><strong>Types of raft foundations:</strong> Unreinforced solid - slab raft, Reinforced solid raft, Beam & slab raft, Cellular raft foundation</p>
+    
+    <h4>Raft Foundation Sketch</h4>
+    <div class="sketch">
+      <svg width="320" height="160" viewBox="0 0 320 160">
+        <rect x="40" y="80" width="240" height="40" fill="#999" stroke="white" stroke-width="2"/>
+        <rect x="80" y="60" width="20" height="20" fill="#d4a574" stroke="white" stroke-width="1"/>
+        <rect x="140" y="60" width="20" height="20" fill="#d4a574" stroke="white" stroke-width="1"/>
+        <rect x="200" y="60" width="20" height="20" fill="#d4a574" stroke="white" stroke-width="1"/>
+        <text x="140" y="100" fill="white" font-size="10">Up to 300mm thick</text>
+        <text x="75" y="55" fill="white" font-size="9">Columns</text>
+      </svg>
+      <div class="sketch-label">Covers entire building area. Supports all columns</div>
+    </div>
+    
+    <p><strong>a) Solid slab raft foundation:</strong> Used when pads overlap, weak subsoil too deep for piles, for breaching weak area, small load-bearing wall buildings. Economically up to <span class="highlight">300mm thick</span>. Downstand prevents weathering.</p>
+    
+    <h4>Beam & Slab Raft Sketch</h4>
+    <div class="sketch">
+      <svg width="320" height="180" viewBox="0 0 320 180">
+        <rect x="40" y="100" width="240" height="30" fill="#999" stroke="white" stroke-width="2"/>
+        <rect x="80" y="70" width="20" height="30" fill="#777" stroke="white" stroke-width="2"/>
+        <rect x="180" y="70" width="20" height="30" fill="#777" stroke="white" stroke-width="2"/>
+        <rect x="90" y="50" width="20" height="20" fill="#d4a574" stroke="white" stroke-width="1"/>
+        <rect x="190" y="50" width="20" height="20" fill="#d4a574" stroke="white" stroke-width="1"/>
+        <text x="130" y="120" fill="white" font-size="10">Slab >300mm</text>
+        <text x="75" y="65" fill="#ff3366" font-size="9">Beam >300mm</text>
+      </svg>
+      <div class="sketch-label">Beams take load + spread to slab. For heavier loads</div>
+    </div>
+    
+    <p><strong>b) Beam and slab raft foundation:</strong> Used when slab thickness exceeds <span class="highlight">300mm</span>. Designed for heavier loads. Beams take loads + spread to monolithic slab. Suitable where thin layer of stiff soil overlies weak strata.</p>
+    
+    <p><strong>c) Cellular raft foundation:</strong> Used where differential settlement likely + foundation supports considerable load. Where stress in raft too high, rigidity required, beams exceed <span class="highlight">900mm deep</span>.</p>
+    
+    <p><strong>Advantages:</strong> Can be used in car park, storage space, accommodate services, supermarkets.</p>
+    <button class="complete-btn">Mark as Complete</button>
+  </div>
+
 </div>
 
-<div class="note-card">
-  <h2>⛏️ EXCAVATION AND TIMBERING</h2>
-  
-  <h3>Excavation</h3>
-  <p><strong>Excavation</strong> - is the removal of earth to form a cavity in the ground for foundation or basements.</p>
-  
-  <h3>Trench excavation</h3>
-  <p>Narrow excavation primarily for strip foundation. Can be done manually or mechanically. Can have <strong>battered faces</strong> or <strong>vertically straight faces</strong>.</p>
-  
-  <ul>
-    <li><strong>Battered faces:</strong> Advantage - no temporary supports required. Disadvantage - extra cost of excavation + extra backfilling.</li>
-    <li><strong>Straight faces:</strong> Advantage - minimum soil removed = minimum backfilling. Disadvantage - site requires <span class="highlight">timbering</span>.</li>
-  </ul>
-  
-  <h3>Timbering</h3>
-  <p><strong>Timbering</strong> - Is the temporary supports provided on the sides of trench to avoid collapsing.</p>
-  <p><span class="highlight">NB:</span> Amount of support required depends on the strength of the soil.</p>
-  
-  <h3>Reasons for timbering</h3>
-  <ul>
-    <li>I. To protect the operatives working in the excavation</li>
-    <li>II. To keep excavation open by acting as retaining wall to sides of trench</li>
-  </ul>
-  
-  <h3>Factors to consider when providing Timbering</h3>
-  <ul>
-    <li>I. Type of soil</li>
-    <li>II. Time excavation will remain open</li>
-    <li>III. Depth of the excavation</li>
-    <li>IV. Load around the excavation</li>
-    <li>V. Vibration from nearby equipment</li>
-    <li>VI. Weather conditions - rain season requires more support</li>
-  </ul>
-  
-  <p><span class="highlight">NB:</span> Timbering provided differently depending on soil type:</p>
-  <ul>
-    <li>I. Timbering in hard dry soils</li>
-    <li>II. Timbering in dry loose soils</li>
-    <li>III. Timbering in loose wet soils</li>
-    <li>IV. Timbering in firm soils</li>
-  </ul>
-  
-  <h3>Methods of protecting sides of trenches</h3>
-  <ul>
-    <li><strong>a) Soils heaps</strong> - soil heaped along given height to prevent accident</li>
-    <li><strong>b) Side rail</strong> - rails erected along trench site on both sides to prevent people from moving close to trench</li>
-    <li><strong>c) Drum filled with soils and having rail/ropes</strong></li>
-  </ul>
-</div>
+<a href="https://whatsapp.com/channel/0029Vb8RWuuDuMRnfJErkX1u" target="_blank" rel="noopener" class="whatsapp-btn">
+  <svg fill="currentColor" viewBox="0 0 24 24" width="20" height="20">
+    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654z"/>
+  </svg>
+  Join WhatsApp Channel for Updates
+</a>
 
-<div class="note-card">
-  <h2>🏗️ UNIT 5: FOUNDATIONS - COMPLETE</h2>
-  
-  <h3>FOUNDATION</h3>
-  <p><strong>Foundation</strong> - is the lower portion of the building usually located below ground level, which transmits the load of the super structure to the sub soil.</p>
-  <p><strong>Or</strong> - part of building in direct contact with ground that transverse all loads to ground safely.</p>
-  
-  <p>It has to support and safely transmit total load. Foundation is designed to overcome problems like cracking, settling, shrinkage and explosion of both soil and foundation material.</p>
-  
-  <h3>Total Loading comprises:</h3>
-  <ul>
-    <li><strong>Live loads</strong> - movable loads: furniture, human beings</li>
-    <li><strong>Dead loads</strong> - fixed loads: walls, roof, floors</li>
-  </ul>
-  
-  <h3>Building code requirement {functional requirement}</h3>
-  <p>Building regulation require that:</p>
-  <ul>
-    <li><strong>a)</strong> Foundation shall safely sustain + transmit combined dead + live loads so as not to cause settlement/movement</li>
-    <li><strong>b)</strong> Be of such depth + constructed to avoid damage by swelling or shrinkage of subsoil</li>
-    <li><strong>c)</strong> Be capable of resisting chemicals attack by sulphates or other corrosive materials</li>
-  </ul>
-  
-  <h3>Functions of foundation</h3>
-  
-  <h4>a) Distribution of load</h4>
-  <p>Soil cannot carry load intensity as much as walls/columns. Foundation distributes load over large area so soil takes intensity safely.</p>
-  
-  <h4>b) Minimizing unequal settlement</h4>
-  <p>All walls/columns distribute load for equal settlement. Foundation minimizes unwanted additional forces + unequal settlement.</p>
-  
-  <h4>c) Providing stability</h4>
-  <p>Building should not move/overturn under lateral forces. Foundation provides firm anchorage + stability.</p>
-  
-  <h4>d) Provide level surface</h4>
-  <p>Foundation provides level surface to build plinth + superstructure.</p>
-  
-  <h4>e) Safety against undermining</h4>
-  <p>Foundation provides safety against undermining by floods or burrowing by animals.</p>
-  
-  <h4>f) Prevention of soil movement</h4>
-  <p>Prevents movement of soil under building due to water flow or soil expansion.</p>
-  
-  <h3>Factors to consider in selection of foundation</h3>
-  <ul>
-    <li><strong>a) Stability</strong> - ability to carry loadings without undue settlement/deformation. Depends on type of sub strata + amount of water.</li>
-    <li><strong>b) Loading</strong> - ability to support weight + imposed load + transmit forces to natural foundation.</li>
-    <li><strong>c) Ability to sustain small movements</strong> at foundation level without endangering load bearing capacity. Achieved by stiff/rigid design or accommodating small movements.</li>
-  </ul>
-  
-  <h3>Causes of ground movements</h3>
-  <ul>
-    <li><strong>a) Subsidence due to underground mining:</strong> Tunnels need props. Props corrode/rot → columns collapse → strata above settles.</li>
-    <li><strong>b) Overloading of soils:</strong> Deforms sub soils in region of foundation.</li>
-    <li><strong>c) Lowering of groundwater table:</strong> Voids previously occupied by water become empty.</li>
-    <li><strong>d) Increasing in water table:</strong> Certain soils lose cohesion → load bearing capacity drops.</li>
-    <li><strong>e) Freezing of moisture:</strong> Water expands when freezing → <span class="highlight">frost heave</span> as soil particles forced apart.</li>
-    <li><strong>f) Settlement:</strong> If building weight > weight of soil previously on area → settlement expected but acceptable if uniform.</li>
-  </ul>
-  
-  <h3>SETTLEMENT</h3>
-  
-  <h4>Types of settlement</h4>
-  <ul>
-    <li><strong>a) Immediate settlement:</strong> Takes place as building is constructed. Occurs in non-cohesive soils.</li>
-    <li><strong>b) Consolidated settlement:</strong> Occurs gradually with time, may continue for years after completion. Mainly in cohesive soils i.e clay.</li>
-  </ul>
-  
-  <h4>Causes of settlement</h4>
-  <ul>
-    <li>a) Deformation of soil due to imposed loads</li>
-    <li>b) Seasonal swelling and shrinkage of soils</li>
-    <li>c) Mass movement of ground in unstable areas</li>
-    <li>d) Vibrations due to pile driving</li>
-    <li>e) Adjacent excavation</li>
-    <li>f) Earth-quakes</li>
-  </ul>
-  
-  <h4>Effects of settlement on building</h4>
-  <ul>
-    <li>a) Cracks in the building</li>
-    <li>b) Sinking of the building</li>
-    <li>c) Collapsing of the building</li>
-    <li>d) Sliding of the building</li>
-    <li>e) Overstressing of the building</li>
-  </ul>
-  
-  <h3>TYPES OF FOUNDATION</h3>
-  <p>Foundations classified into 2 categories:</p>
-  <ul>
-    <li><strong>a) Shallow foundations</strong></li>
-    <li><strong>b) Deep foundations</strong></li>
-  </ul>
-  
-  <h4>Shallow foundations</h4>
-  <p>Usually located no more than <span class="highlight">2000mm</span> below lowest finished floor. Used when soil close to surface has sufficient bearing capacity + underlying strata do not cause undue settlement.</p>
-  
-  <p><strong>They include:</strong></p>
-  
-  <p><strong>a) Strip foundation</strong></p>
-  <ul>
-    <li>• Shallow/traditional strip foundation</li>
-    <li>• Reinforced/wide foundation</li>
-    <li>• Deep strip foundation</li>
-    <li>• Stepped strip foundation</li>
-  </ul>
-  
-  <p><strong>b) Pad foundation</strong></p>
-  <ul>
-    <li>• Spread/isolated footing</li>
-    <li>• Combined footing</li>
-    <li>• Strap footing</li>
-  </ul>
-  
-  <p><strong>c) Raft foundation</strong></p>
-  
-  <p><strong>Deep foundations</strong></p>
-  <ul>
-    <li>a) Pile foundation</li>
-    <li>b) Pier foundation</li>
-  </ul>
-  
-  <h3>I. STRIP FOUNDATIONS</h3>
-  
-  <h4>a) Shallow/traditional strip foundations</h4>
-  <p>Used where soil has good bearing capacity. Continuous strip of plain concrete spreads load uniformly from walls to subsoil. Spread depends on bearing capacity + shear strength.</p>
-  
-  <h4>a) Shallow Strip Foundation Sketch</h4>
-  <div class="sketch">
-    <svg width="320" height="220" viewBox="0 0 320 220">
-      <rect x="120" y="60" width="80" height="60" fill="#d4a574" stroke="white" stroke-width="2"/>
-      <text x="145" y="95" fill="black" font-size="10">Wall</text>
-      <rect x="80" y="120" width="160" height="30" fill="#999" stroke="white" stroke-width="2"/>
-      <text x="125" y="140" fill="white" font-size="10">Concrete</text>
-      <rect x="80" y="150" width="160" height="20" fill="#555" stroke="white" stroke-width="1"/>
-      <text x="130" y="165" fill="white" font-size="9">Blinding</text>
-      <rect x="80" y="170" width="160" height="25" fill="#777" stroke="white" stroke-width="1"/>
-      <text x="130" y="187" fill="white" font-size="9">150mm Hardcore</text>
-      <line x1="120" y1="60" x2="90" y2="120" stroke="#38bdf8" stroke-width="1" stroke-dasharray="3,3"/>
-      <text x="85" y="80" fill="#38bdf8" font-size="10">45°</text>
-      <text x="250" y="135" fill="white" font-size="10">W = 3x wall width</text>
-    </svg>
-    <div class="sketch-label">Load spreads at 45°. Width = 3x wall. 150mm hardcore base</div>
-  </div>
-  
-  <p><span class="highlight">NB:</span> In all cases W must give adequate working place <span class="highlight">450-600mm</span> minimum depending on depth.</p>
-  
-  <h4>Design consideration</h4>
-  <ul>
-    <li>Load transmitted at <span class="highlight">45°</span> from base of wall to soil</li>
-    <li>Depth of strip must be equal to or greater than overall width of wall</li>
-    <li>Width of foundation must be <span class="highlight">3 times</span> width of supported wall</li>
-    <li>Compacted hardcore base minimum <span class="highlight">150mm</span> for subfloor platform</li>
-  </ul>
-  
-  <h4>b) Reinforced / wide strip</h4>
-  <p>Used in subsoil with poor/low bearing capacity: soft sand, clays, silt, build-up soils. Reinforced in transverse + longitudinal direction to resist cracking. Reinforcements lapped at corners.</p>
-  
-  <h4>c) Deep Strip Foundation</h4>
-  <p>Depth <span class="highlight">900mm</span>. Used in shrinkable clayey soil to counteract seasonal variation. Clay shrinks dry season, swells wet season. Provides greater resistance to fracture from unequal settlement.</p>
-  
-  <h4>d) Stepped strip foundations</h4>
-  <p>Used on sloping grounds to reduce excavation, backfilling, surplus soil removal, trench timbering. Each step <span class="highlight">150mm-225mm</span> high. Lap of concrete at steps not less than concrete foundation depth & not less than <span class="highlight">300mm</span>. DPC may also be stepped.</p>
-  
-  <h4>d) Stepped Strip Foundation Sketch</h4>
-  <div class="sketch">
-    <svg width="320" height="200" viewBox="0 0 320 200">
-      <polyline points="60,50 60,100 110,100 110,130 160,130 160,160 210,160" fill="none" stroke="#ff3366" stroke-width="3"/>
-      <rect x="50" y="100" width="10" height="80" fill="#999" stroke="white" stroke-width="1"/>
-      <rect x="100" y="130" width="10" height="50" fill="#999" stroke="white" stroke-width="1"/>
-      <rect x="150" y="160" width="10" height="20" fill="#999" stroke="white" stroke-width="1"/>
-      <text x="75" y="95" fill="white" font-size="10">150-225mm</text>
-      <text x="125" y="125" fill="white" font-size="10">150-225mm</text>
-      <line x1="160" y1="160" x2="210" y2="160" stroke="#38bdf8" stroke-width="1"/>
-      <text x="165" y="155" fill="#38bdf8" font-size="10">Lap ≥300mm</text>
-    </svg>
-    <div class="sketch-label">Each step 150-225mm high. Lap not less than 300mm</div>
-  </div>
-  
-  <h3>2. RAFT FOUNDATION {FLOATING FOUNDATION}</h3>
-  <p>Large continuous footing supporting all columns. Covers entire building area + may extend beyond. Up to <span class="highlight">300mm thick</span> reinforced concrete.</p>
-  
-  <p><strong>Used for:</strong> Soils with poor bearing capacity, variations in soil conditions, heavier loads, significant differential settlement.</p>
-  
-    <h4>Types of raft foundations</h4>
-  <ul>
-    <li>• Unreinforced solid - slab raft</li>
-    <li>• Reinforced solid raft</li>
-    <li>• Beam & slab raft</li>
-    <li>• Cellular raft foundation</li>
-  </ul>
-  
-  <h4>a) Solid slab raft foundation</h4>
-  <p>Used when pads overlap, weak subsoil too deep for piles, for breaching weak area, small load-bearing wall buildings. Economically up to <span class="highlight">300mm thick</span>. Downstand prevents weathering.</p>
-  
-  <h4>Raft Foundation Sketch</h4>
-  <div class="sketch">
-    <svg width="320" height="160" viewBox="0 0 320 160">
-      <rect x="40" y="80" width="240" height="40" fill="#999" stroke="white" stroke-width="2"/>
-      <rect x="80" y="60" width="20" height="20" fill="#d4a574" stroke="white" stroke-width="1"/>
-      <rect x="140" y="60" width="20" height="20" fill="#d4a574" stroke="white" stroke-width="1"/>
-      <rect x="200" y="60" width="20" height="20" fill="#d4a574" stroke="white" stroke-width="1"/>
-      <text x="140" y="100" fill="white" font-size="10">Up to 300mm thick</text>
-      <text x="75" y="55" fill="white" font-size="9">Columns</text>
-    </svg>
-    <div class="sketch-label">Covers entire building area. Supports all columns</div>
-  </div>
-  
-  <h4>b) Beam and slab raft foundation</h4>
-  <p>Used when slab thickness exceeds <span class="highlight">300mm</span>. Designed for heavier loads. Beams take loads + spread to monolithic slab. Suitable where thin layer of stiff soil overlies weak strata.</p>
-  
-  <h4>Beam & Slab Raft Sketch</h4>
-  <div class="sketch">
-    <svg width="320" height="180" viewBox="0 0 320 180">
-      <rect x="40" y="100" width="240" height="30" fill="#999" stroke="white" stroke-width="2"/>
-      <rect x="80" y="70" width="20" height="30" fill="#777" stroke="white" stroke-width="2"/>
-      <rect x="180" y="70" width="20" height="30" fill="#777" stroke="white" stroke-width="2"/>
-      <rect x="90" y="50" width="20" height="20" fill="#d4a574" stroke="white" stroke-width="1"/>
-      <rect x="190" y="50" width="20" height="20" fill="#d4a574" stroke="white" stroke-width="1"/>
-      <text x="130" y="120" fill="white" font-size="10">Slab >300mm</text>
-      <text x="75" y="65" fill="#ff3366" font-size="9">Beam >300mm</text>
-    </svg>
-    <div class="sketch-label">Beams take load + spread to slab. For heavier loads</div>
-  </div>
-  
-  <h4>c) Cellular raft foundation</h4>
-  <p>Used where differential settlement likely + foundation supports considerable load. Where stress in raft too high, rigidity required, beams exceed <span class="highlight">900mm deep</span>.</p>
-  
-  <p><strong>Advantages:</strong> Can be used in car park, storage space, accommodate services, supermarkets.</p>
-</div>
-
-</div>
-
-
+<script>
+  // Mark as Complete functionality
+  document.querySelectorAll('.complete-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      this.textContent = '✓ Completed';
+      this.style.background = '#16a34a';
+      this.disabled = true;
+      
+      // Update progress bar
+      const completed = document.querySelectorAll('.complete-btn:disabled').length;
+      const total = document.querySelectorAll('.complete-btn').length;
+      const percent = (completed / total) * 100;
+      document.querySelector('.progress-fill').style.width = percent + '%';
+      document.querySelector('.top-bar span').textContent = completed + '/' + total + ' sections completed';
+    });
+  });
+</script>
 
 </body>
 </html>
- 
