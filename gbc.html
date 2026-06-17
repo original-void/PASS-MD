@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GBC - General Building Construction Notes</title>
+
+<!-- Firebase Auth -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="auth.js"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --primary: #ff3366;
+    --primary-dark: #e91e63;
+    --bg: #0f172a;
+    --card-bg: #1e293b;
+    --text: #f1f5f9;
+    --text-dim: #94a3b8;
+    --accent: #38bdf8;
+    --success: #25D366;
+  }
+  
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: var(--text);
+    min-height: 100vh;
+    padding-bottom: 80px;
+    line-height: 1.8;
+  }
+  
+  .top-bar {
+    position: absolute; 
+    top: 15px; 
+    right: 20px; 
+    display: flex; 
+    align-items: center; 
+    gap: 12px; 
+    color: white;
+    z-index: 10;
+  }
+  .top-bar span { font-weight: 600; font-size: 14px; }
+  .top-bar button {
+    background: rgba(255,255,255,0.2); 
+    border: none; 
+    padding: 8px 16px; 
+    border-radius: 6px; 
+    color: white; 
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  
+  .header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    padding: 60px 20px 30px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(255, 51, 102, 0.3);
+    position: relative;
+  }
+  
+  .header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  }
+  
+  .header p {
+    font-size: 0.85rem;
+    opacity: 0.9;
+    margin-top: 8px;
+    color: white;
+  }
+  
+  .back-btn {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    background: rgba(255,255,255,0.2);
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 0 20px;
+  }
+  
+  .note-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 28px 24px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255,255,255,0.05);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    border-left: 4px solid var(--primary);
+  }
+  
+  .note-card h2 {
+    color: white;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .note-card h3 {
+    color: var(--accent);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .note-card h4 {
+    color: var(--primary);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 16px;
+    margin-bottom: 8px;
+  }
+  
+  .note-card p, .note-card li {
+    color: var(--text);
+    font-size: 16px;
+    margin: 10px 0;
+  }
+  
+  .note-card ul {
+    padding-left: 22px;
+  }
+  
+  .note-card strong {
+    color: var(--accent);
+    font-weight: 600;
+  }
+  
+  .highlight {
+    background: rgba(255, 51, 102, 0.2);
+    padding: 2px 8px;
+    border-radius: 4px;
+    color: white;
+    font-weight: 600;
+  }
+  
+  .whatsapp-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    max-width: 400px;
+    margin: 40px auto 0;
+    padding: 14px;
+    background: var(--success);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .whatsapp-btn:hover { background: #1ebe5d; transform: translateY(-2px); }
+  .whatsapp-btn svg { width: 22px; height: 22px; }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <span id="user-display">Loading...</span>
+  <button onclick="logout()">Logout</button>
+</div>
+
+<div class="header">
+  <button class="back-btn" onclick="window.location.href='home.html'">← Back</button>
+  <h1>GENERAL BUILDING CONSTRUCTION</h1>
+  <p>KNEC Notes - Module 1</p>
+</div>
+
+<div class="container">
+
+<div class="note-card">
+  <h2>🏗️ UNIT 5: FOUNDATIONS - COMPLETE</h2>
+  
+  <h3>SETTLEMENT</h3>
+  
+  <h4>Types of settlement</h4>
+  <ul>
+    <li><strong>a) Immediate settlement:</strong> Takes place as building is constructed. Occurs in non-cohesive soils.</li>
+    <li><strong>b) Consolidated settlement:</strong> Occurs gradually with time, may continue for years after completion. Mainly in cohesive soils i.e clay.</li>
+  </ul>
+  
+  <h4>Causes of settlement</h4>
+  <ul>
+    <li>a) Deformation of soil due to imposed loads</li>
+    <li>b) Seasonal swelling and shrinkage of soils</li>
+    <li>c) Mass movement of ground in unstable areas</li>
+    <li>d) Vibrations due to pile driving</li>
+    <li>e) Adjacent excavation</li>
+    <li>f) Earth-quakes</li>
+  </ul>
+  
+  <h4>Effects of settlement on building</h4>
+  <ul>
+    <li>a) Cracks in the building</li>
+    <li>b) Sinking of the building</li>
+    <li>c) Collapsing of the building</li>
+    <li>d) Sliding of the building</li>
+    <li>e) Overstressing of the building</li>
+  </ul>
+  
+  <h3>TYPES OF FOUNDATION</h3>
+  <p>Foundations classified into 2 categories:</p>
+  <ul>
+    <li><strong>a) Shallow foundations</strong></li>
+    <li><strong>b) Deep foundations</strong></li>
+  </ul>
+  
+  <h4>Shallow foundations</h4>
+  <p>Usually located no more than <span class="highlight">2000mm</span> below lowest finished floor. Used when soil close to surface has sufficient bearing capacity + underlying strata do not cause undue settlement.</p>
+  
+  <p><strong>They include:</strong></p>
+  
+  <p><strong>a) Strip foundation</strong></p>
+  <ul>
+    <li>• Shallow/traditional strip foundation</li>
+    <li>• Reinforced/wide foundation</li>
+    <li>• Deep strip foundation</li>
+    <li>• Stepped strip foundation</li>
+  </ul>
+  
+  <p><strong>b) Pad foundation</strong></p>
+  <ul>
+    <li>• Spread/isolated footing</li>
+    <li>• Combined footing</li>
+    <li>• Strap footing</li>
+  </ul>
+  
+  <p><strong>c) Raft foundation</strong></p>
+  
+  <p><strong>Deep foundations</strong></p>
+  <ul>
+    <li>a) Pile foundation</li>
+    <li>b) Pier foundation</li>
+  </ul>
+  
+  <h3>I. STRIP FOUNDATIONS</h3>
+  
+  <h4>a) Shallow/traditional strip foundations</h4>
+  <p>Used where soil has good bearing capacity. Continuous strip of plain concrete spreads load uniformly from walls to subsoil. Spread depends on bearing capacity + shear strength.</p>
+  
+  <p><span class="highlight">NB:</span> In all cases W must give adequate working place <span class="highlight">450-600mm</span> minimum depending on depth.</p>
+  
+  <h4>Design consideration</h4>
+  <ul>
+    <li>Load transmitted at <span class="highlight">45°</span> from base of wall to soil</li>
+    <li>Depth of strip must be equal to or greater than overall width of wall</li>
+    <li>Width of foundation must be <span class="highlight">3 times</span> width of supported wall</li>
+    <li>Compacted hardcore base minimum <span class="highlight">150mm</span> for subfloor platform</li>
+  </ul>
+  
+  <h4>b) Reinforced / wide strip</h4>
+  <p>Used in subsoil with poor/low bearing capacity: soft sand, clays, silt, build-up soils. Reinforced in transverse + longitudinal direction to resist cracking. Reinforcements lapped at corners.</p>
+  
+  <h4>c) Deep Strip Foundation</h4>
+  <p>Depth <span class="highlight">900mm</span>. Used in shrinkable clayey soil to counteract seasonal variation. Clay shrinks dry season, swells wet season. Provides greater resistance to fracture from unequal settlement.</p>
+  
+  <h4>d) Stepped strip foundations</h4>
+  <p>Used on sloping grounds to reduce excavation, backfilling, surplus soil removal, trench timbering. Each step <span class="highlight">150mm-225mm</span> high. Lap of concrete at steps not less than concrete foundation depth & not less than <span class="highlight">300mm</span>. DPC may also be stepped.</p>
+  
+  <h3>2. RAFT FOUNDATION {FLOATING FOUNDATION}</h3>
+  <p>Large continuous footing supporting all columns. Covers entire building area + may extend beyond. Up to <span class="highlight">300mm thick</span> reinforced concrete.</p>
+  
+  <p><strong>Used for:</strong> Soils with poor bearing capacity, variations in soil conditions, heavier loads, significant differential settlement.</p>
+  
+  <h4>Types of raft foundations</h4>
+  <ul>
+    <li>• Unreinforced solid - slab raft</li>
+    <li>• Reinforced solid raft</li>
+    <li>• Beam & slab raft</li>
+    <li>• Cellular raft foundation</li>
+  </ul>
+  
+  <h4>a) Solid slab raft foundation</h4>
+  <p>Used when pads overlap, weak subsoil too deep for piles, for breaching weak area, small load-bearing wall buildings. Economically up to <span class="highlight">300mm thick</span>. Downstand prevents weathering.</p>
+  
+  <h4>b) Beam and slab raft foundation</h4>
+  <p>Used when slab thickness exceeds <span class="highlight">300mm</span>. Designed for heavier loads. Beams take loads + spread to monolithic slab. Suitable where thin layer of stiff soil overlies weak strata.</p>
+  
+  <h4>c) Cellular raft foundation</h4>
+  <p>Used where differential settlement likely + foundation supports considerable load. Where stress in raft too high, rigidity required, beams exceed <span class="highlight">900mm deep</span>.</p>
+  
+  <p><strong>Advantages:</strong> Can be used in car park, storage space, accommodate services, supermarkets.</p>
+</div>
+
+</div>
+
+<!-- WhatsApp Channel Button -->
+<a href="https://whatsapp.com/channel/0029Vb8RWuuDuMRnfJErkX1u" target="_blank" rel="noopener" class="whatsapp-btn">
+  <svg fill="currentColor" viewBox="0 0 24 24">
+    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
+  </svg>
+  Join WhatsApp Channel for Updates
+</a>
+
+</body>
+  </html>
